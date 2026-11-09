@@ -47,3 +47,9 @@ npm test
 The test opens 104 real local WebSocket connections (synthetic clients, not 104 human players), checks four-person team assignment, rejects slot 105, checks host-only start, tests server damage and tamper rejection, and runs a thirty-second movement/shooting workload. The generated `load-test-result.json` records timings and bandwidth for that one machine/run. It is not a WAN latency, browser GPU or mobile FPS benchmark.
 
 Dependency: `ws`, MIT, https://github.com/websockets/ws . Version and integrity are pinned in `package-lock.json`.
+
+## Solo, Duo and Squad
+
+Online 104 offers Solo (1 player/team, 104 teams), Duo (2/team, 52 teams), and Squad (4/team, 26 teams). Choose before connecting; a room keeps its original mode. A conflicting mode is rejected by the server. Invite links/codes retain the mode; older two-part codes default to Squad. In Solo, invitees join as opponents, never teammates. Match start requires at least two opposing teams.
+
+For one person playing immediately, Play solo vs bots starts the existing offline Battle Royale mode without a multiplayer connection. It uses the classic arena and AI opponents; online modes keep the India map and real connections. The team-size selector is locked while connected. Leave before changing mode.

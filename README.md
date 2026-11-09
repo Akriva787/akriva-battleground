@@ -95,3 +95,9 @@ Includes `online104.js`, `server/`, a root Dockerfile and a pinned dependency lo
 
 ## Squad invitations
 Create my squad connects with a new squad code. Share invite uses the device share sheet when supported; Copy link/Copy code are fallbacks. Friends open the link, enter a callsign and Accept invitation, or paste the invite/code in Join squad. Four live squad slots update as members join or leave. Invitations do not auto-connect, change server URLs or send messages automatically. There are no account friend lists or offline notifications. Rooms are in memory; started/full squads reject joins. Invite links are bearer codes, not identity checks.
+
+## Solo, Duo and Squad
+
+Online 104 offers Solo (1 player/team, 104 teams), Duo (2/team, 52 teams), and Squad (4/team, 26 teams). Choose before connecting; a room keeps its original mode. A conflicting mode is rejected by the server. Invite links/codes retain the mode; older two-part codes default to Squad. In Solo, invitees join as opponents, never teammates. Match start requires at least two opposing teams.
+
+For one person playing immediately, Play solo vs bots starts the existing offline Battle Royale mode without a multiplayer connection. It uses the classic arena and AI opponents; online modes keep the India map and real connections. The team-size selector is locked while connected. Leave before changing mode.
