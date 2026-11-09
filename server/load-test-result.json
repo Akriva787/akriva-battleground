@@ -5,9 +5,9 @@
   "overflowRejected": true,
   "authoritativeCombat": true,
   "damageTamperingRejected": true,
-  "snapshots": 38549,
-  "loadSeconds": 30.63,
-  "tickP95Ms": 12.41,
-  "maxTickMs": 17.5,
-  "outboundMegabytesPerSecond": 1.432
+  "snapshots": 38557,
+  "loadSeconds": 30.79,
+  "tickP95Ms": 16.64,
+  "maxTickMs": 25.16,
+  "outboundMegabytesPerSecond": 1.468
 }

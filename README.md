@@ -92,3 +92,6 @@ New default exploration option with the full generalized India outline, islands 
 ## Squad 104 dedicated online mode
 
 Includes `online104.js`, `server/`, a root Dockerfile and a pinned dependency lock. See SQUAD104-GUIDE.md and server/README.md. There are 104 actual connection slots, 26 squads of four, server-owned combat and a shared India map. No AI fillers. Infantry only; India Expedition vehicles are not synchronized into this mode. Static Netlify/GitHub Pages hosting alone cannot run this server. Deploy the backend separately or serve the entire game from it. No public backend has been deployed by this package.
+
+## Squad invitations
+Create my squad connects with a new squad code. Share invite uses the device share sheet when supported; Copy link/Copy code are fallbacks. Friends open the link, enter a callsign and Accept invitation, or paste the invite/code in Join squad. Four live squad slots update as members join or leave. Invitations do not auto-connect, change server URLs or send messages automatically. There are no account friend lists or offline notifications. Rooms are in memory; started/full squads reject joins. Invite links are bearer codes, not identity checks.
