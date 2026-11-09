@@ -1,0 +1,13 @@
+{
+  "connections": 104,
+  "squads": 26,
+  "playersPerSquad": 4,
+  "overflowRejected": true,
+  "authoritativeCombat": true,
+  "damageTamperingRejected": true,
+  "snapshots": 38549,
+  "loadSeconds": 30.63,
+  "tickP95Ms": 12.41,
+  "maxTickMs": 17.5,
+  "outboundMegabytesPerSecond": 1.432
+}

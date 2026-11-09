@@ -1,1 +1,94 @@
-# akriva-battleground
+# AKRIVA GAMINING BATTLEGROUND
+
+A mobile-friendly, third-person browser game built with HTML, CSS, JavaScript and WebGL. Solo and AI modes run in a static browser build. Squad 104 requires the included dedicated server; older party modes require a compatible host-provided room service; ordinary static hosting does not provide that multiplayer service. There are no payments or account backend in this package.
+
+## Run locally
+
+No npm installation or build is required. From this folder run:
+
+```sh
+python3 -m http.server 8000
+```
+
+Open http://localhost:8000 in a WebGL-enabled browser. Keep the terminal running while playing. This localhost address only works on the same computer; deploy to a host for a public link.
+
+## Upload to GitHub
+
+1. Create a new repository, for example `akriva-gamining-battleground`.
+2. Extract this ZIP and upload the **contents** of this folder into the repository root. Do not upload just the ZIP. `index.html` must be at the root.
+3. Include `soldier-data.js`, `tactical-theme.wav`, `style.css` and `game.js`; the game needs these files.
+4. Include the asset notices alongside the game.
+
+## GitHub Pages
+
+In the repository open **Settings → Pages**, choose **Deploy from a branch**, select your branch (usually `main`) and **/(root)**, then save. GitHub will show the published URL once deployment finishes. GitHub Pages availability depends on your account/repository settings. There is no Jekyll build or server-side code required.
+
+## Netlify
+
+Import this GitHub repository into Netlify. Leave the build command empty and set the publish directory to `.`. `netlify.toml` contains the static publish configuration. Once deployed, use Netlify's domain settings to choose your preferred available site name. A name is not reserved by this package.
+
+## Controls
+
+| Action | Desktop | Mobile |
+| --- | --- | --- |
+| Move | WASD / arrow keys | Left joystick |
+| Aim camera | Mouse / drag | Swipe scene |
+| Fire | Left click | Hold FIRE |
+| Aim/zoom | Right click / Aim | Aim |
+| Jump | Space | Jump |
+| Crouch | C | Crouch |
+| Prone / stand | Z | Prone |
+| Reload | R | Reload |
+| Objective interaction | Hold F | Hold INTERACT |
+| Loot | E | Support → Loot |
+| Missile | G | Support → Missile |
+| Ambulance | H | Support → Ambulance |
+| Enter/exit vehicle | V | Support → Enter/exit |
+| Medkit | M | Support → Medkit |
+| Switch weapon | 1–4 / Gun selector | Settings → Gun |
+| Cycle carried guns | Q | Support → Switch gun |
+| Pick up gun / loot | E | Support → Loot |
+| Squad scoreboard | Hold Tab | Tap the team score bar |
+
+**Online Co-op (claude.ai link only):** choose *Online Co-op · up to 4 friends*, type the same party code as your friends, then deploy. Friends must be signed in to claude.ai and have access to the shared artifact.
+| Pause | P / Esc | Pause / Settings |
+
+Jumping is unavailable while driving. Land before jumping again. Prone mode supports slow movement and firing. All deployments start in TPP.
+
+## Files
+
+- `index.html`: screens, menus and control buttons.
+- `style.css`: interface and touch layout.
+- `game.js`: WebGL renderer, movement, camera, combat, bots, missions, equipment, audio and input.
+- `soldier-data.js`: embedded, transformed soldier animation and texture data, plus the terrain texture.
+- `tactical-theme.wav`: original background music loop.
+- `ASSET-NOTICES.md`: third-party asset credits and source links.
+- `scripts/build-single-file.py`: optional offline single-file HTML exporter.
+- `.nojekyll`: GitHub Pages static-file marker.
+- `netlify.toml`: Netlify publish configuration.
+
+## Optional single-file export
+
+```sh
+python3 scripts/build-single-file.py
+```
+
+This writes `dist/index.html` with embedded code, textures and music. The normal source files above already run without this export.
+
+## Validation and limits
+
+Targeted Squad 104 client integration, India world/render and Operations Hub checks passed. The dedicated server passed a 104-connection synthetic local workload. These do not establish real-device FPS or a deployed 104-human match. Known older regression failures remain documented in OPERATIONS-VALIDATION.md.
+
+## Asset rights
+
+Keep `ASSET-NOTICES.md`. Third-party soldier/animation/texture data retains its source terms; no blanket open-source license is applied to those assets by this package. This is a runnable game source export, not a standalone asset library. Review the linked source terms before relicensing or redistributing assets separately. No BGMI assets are included.
+
+## Operations Hub update
+The game opens on a contract board with Signal Rush, Operation Blackout and Battle Royale. Signal Rush adds a four-minute relay-and-extraction challenge. XP, rank, insignia and the last eight results persist in local browser storage. `platform.js` is required and must be uploaded along with `game.js`. Squad/Party options remain in the deployment selector. See `OPERATIONS-GUIDE.md` for rewards and rules and `OPERATIONS-VALIDATION.md` for current test limits.
+
+## India Expedition — 7 November 2026
+New default exploration option with the full generalized India outline, islands and 36 region hubs. Six road vehicle types have throttle, reverse, steering, brake and entry/exit controls. Include `india-data.js` and `india.js` when deploying. N or Support → India Atlas opens travel/ferry transit. This mode has no shrinking zone or AI combat; classic modes retain their original arena. See `INDIA-GUIDE.md` for controls, validation and noncommercial SoI map usage restrictions.
+
+## Squad 104 dedicated online mode
+
+Includes `online104.js`, `server/`, a root Dockerfile and a pinned dependency lock. See SQUAD104-GUIDE.md and server/README.md. There are 104 actual connection slots, 26 squads of four, server-owned combat and a shared India map. No AI fillers. Infantry only; India Expedition vehicles are not synchronized into this mode. Static Netlify/GitHub Pages hosting alone cannot run this server. Deploy the backend separately or serve the entire game from it. No public backend has been deployed by this package.
