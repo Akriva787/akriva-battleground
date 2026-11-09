@@ -91,7 +91,7 @@ New default exploration option with the full generalized India outline, islands 
 
 ## Squad 104 dedicated online mode
 
-Includes `online104.js`, `server/`, a root Dockerfile and a pinned dependency lock. See SQUAD104-GUIDE.md and server/README.md. There are 104 actual connection slots, 26 squads of four, server-owned combat and a shared India map. No AI fillers. Infantry only; India Expedition vehicles are not synchronized into this mode. Static Netlify/GitHub Pages hosting alone cannot run this server. Deploy the backend separately or serve the entire game from it. No public backend has been deployed by this package.
+Includes `online104.js`, `server/`, a root Dockerfile and a pinned dependency lock. See SQUAD104-GUIDE.md and server/README.md. There are 104 actual connection slots, 26 squads of four, server-owned combat and a shared India map. No AI fillers. All seven vehicle types are now synchronized in online matches. Static Netlify/GitHub Pages hosting alone cannot run this server. Deploy the backend separately or serve the entire game from it. No public backend has been deployed by this package.
 
 ## Squad invitations
 Create my squad connects with a new squad code. Share invite uses the device share sheet when supported; Copy link/Copy code are fallbacks. Friends open the link, enter a callsign and Accept invitation, or paste the invite/code in Join squad. Four live squad slots update as members join or leave. Invitations do not auto-connect, change server URLs or send messages automatically. There are no account friend lists or offline notifications. Rooms are in memory; started/full squads reject joins. Invite links are bearer codes, not identity checks.
@@ -101,3 +101,9 @@ Create my squad connects with a new squad code. Share invite uses the device sha
 Online 104 offers Solo (1 player/team, 104 teams), Duo (2/team, 52 teams), and Squad (4/team, 26 teams). Choose before connecting; a room keeps its original mode. A conflicting mode is rejected by the server. Invite links/codes retain the mode; older two-part codes default to Squad. In Solo, invitees join as opponents, never teammates. Match start requires at least two opposing teams.
 
 For one person playing immediately, Play solo vs bots starts the existing offline Battle Royale mode without a multiplayer connection. It uses the classic arena and AI opponents; online modes keep the India map and real connections. The team-size selector is locked while connected. Leave before changing mode.
+
+## Vehicle graphics and driving
+
+Seven original procedural designs: hatchback, 4x4 SUV, pickup, motorbike, scooter, auto rickshaw and ambulance. Bevelled body/cabin geometry, reflective-shaded windows, mirrors, grilles, separate tyre and alloy geometry, rotating/steering wheels and a rider pose for two-wheelers replace the simple block/ball models. Geometry is cached and reused. These are custom browser-game models, not licensed manufacturer models or a claim of photorealistic BGMI assets.
+
+Vehicle Garage on the deployment screen offers one-click test drives in India Expedition. Every online city hub also has all seven types. Online Solo/Duo/Squad share server-owned entry, one exclusive driver seat per vehicle, speed/steering/brakes/collisions, movement snapshots, exit and disconnect release. Walk within 4m and press V / Drive. WASD/left joystick drives; Space/Brake stops; V/Exit gets out. Drivers cannot fire. Passenger seats, vehicle damage, fuel and online ambulance healing are not included.

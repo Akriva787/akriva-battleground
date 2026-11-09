@@ -31,7 +31,7 @@ Open http://localhost:8787 on the same computer. Localhost is not a public link.
 
 ## Scope
 
-This is infantry multiplayer: server-managed movement, combat, four guns, ammo, reloads, two medkits, zone and squad victory. Existing India Expedition vehicles remain a separate mode. No synchronized online vehicles, voice, revival, accounts, reconnect/resume or persistent progression server are included. A disconnect eliminates that slot. Menus cannot pause an online match. The server requires hosting before this mode is publicly playable.
+Online multiplayer includes server-controlled vehicles alongside server-managed movement, combat, four guns, ammo, reloads, two medkits, zone and squad victory. Vehicle entry/driving is synchronized online. Voice, revival, accounts, reconnect/resume and persistent server progression are not included. A disconnect eliminates that slot. Menus cannot pause an online match. The server requires hosting before this mode is publicly playable.
 
 ## Verification
 

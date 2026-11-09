@@ -34,7 +34,7 @@ Player state is simulated at 20 Hz. Snapshots are sent at 10 Hz, using nearby-pl
 
 This first version uses anonymous player names and room/squad codes. It has no accounts, matchmaking service, voice chat, durable match database, server clustering, revive system or production anti-cheat service. Losing a connection eliminates that slot; reconnect/resume is not implemented. Player names identify sessions, not verified human identities. Menus cannot pause the server match.
 
-Squad 104 is infantry-only. Vehicles and region transit remain available in India Expedition and are not synchronized into this mode. Everyone receives four server-managed guns and two medkits. Reload with R; switch guns with 1–4; use M for medkit; use E within a hub pad to resupply (20-second cooldown).
+All online modes now support seven server-authoritative vehicle types. Region transit remains exclusive to India Expedition. Everyone receives four server-managed guns and two medkits. Reload with R; switch guns with 1–4; use M for medkit; use E within a hub pad to resupply (20-second cooldown).
 
 The country map uses the supplied Survey of India-derived noncommercial prototype data. Retain `ASSET-NOTICES.md` and its usage restrictions.
 
@@ -53,3 +53,9 @@ Dependency: `ws`, MIT, https://github.com/websockets/ws . Version and integrity 
 Online 104 offers Solo (1 player/team, 104 teams), Duo (2/team, 52 teams), and Squad (4/team, 26 teams). Choose before connecting; a room keeps its original mode. A conflicting mode is rejected by the server. Invite links/codes retain the mode; older two-part codes default to Squad. In Solo, invitees join as opponents, never teammates. Match start requires at least two opposing teams.
 
 For one person playing immediately, Play solo vs bots starts the existing offline Battle Royale mode without a multiplayer connection. It uses the classic arena and AI opponents; online modes keep the India map and real connections. The team-size selector is locked while connected. Leave before changing mode.
+
+## Vehicle graphics and driving
+
+Seven original procedural designs: hatchback, 4x4 SUV, pickup, motorbike, scooter, auto rickshaw and ambulance. Bevelled body/cabin geometry, reflective-shaded windows, mirrors, grilles, separate tyre and alloy geometry, rotating/steering wheels and a rider pose for two-wheelers replace the simple block/ball models. Geometry is cached and reused. These are custom browser-game models, not licensed manufacturer models or a claim of photorealistic BGMI assets.
+
+Vehicle Garage on the deployment screen offers one-click test drives in India Expedition. Every online city hub also has all seven types. Online Solo/Duo/Squad share server-owned entry, one exclusive driver seat per vehicle, speed/steering/brakes/collisions, movement snapshots, exit and disconnect release. Walk within 4m and press V / Drive. WASD/left joystick drives; Space/Brake stops; V/Exit gets out. Drivers cannot fire. Passenger seats, vehicle damage, fuel and online ambulance healing are not included.
