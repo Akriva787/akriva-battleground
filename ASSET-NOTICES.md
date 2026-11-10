@@ -1,14 +1,22 @@
 # AKRIVA asset notices
 
-## Textured soldier
+## Tactical human character
 
-The Vanguard soldier mesh, diffuse/normal textures, and Idle/Walk/Run animations are adapted from Soldier.glb in the official three.js examples, whose example credits Mixamo.
+Military tactical suit (LowPolyGameReady) by DanlyVostok (1799danly), CC BY 4.0. Original model and license were verified through Sketchfab's public model metadata.
+
+- Creator/model: https://sketchfab.com/3d-models/military-tactical-suit-lowpolygameready-ef698ce36b1545a78ce592dd3db4c7ed
+- License: https://creativecommons.org/licenses/by/4.0/
+- Asset copy: https://github.com/cktang88/3d-fps/blob/main/public/assets/models/characters/soldier_tac.glb
+
+Changes for Akriva: omitted optional headset with incompatible attachment offsets; repacked seven texture materials into atlases; retargeted animations; baked animation frames; resized to 1.84 metres; added a game-held rifle. This is a generic tactical human wearing a cap and face covering.
+
+Idle/Walk/Run animation data adapted from Mixamo / three.js Soldier.glb:
 
 - Source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
-- Example and attribution: https://threejs.org/examples/webgl_animation_skinning_blending.html
-- Mixamo usage information: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+- Example attribution: https://threejs.org/examples/webgl_animation_skinning_blending.html
+- Mixamo usage: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
 
-The game embeds a transformed animation-frame representation and original texture maps for in-game rendering. The source GLB is not redistributed as a separate output. No BGMI models, textures, characters, or maps are included. This character is a generic armored operator, not a replica of a BGMI character.
+No BGMI models, textures or characters are included. Vehicle designs are original unbranded procedural models.
 
 ## Ground surface
 
