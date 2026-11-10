@@ -177,3 +177,8 @@ body:not(.playing) #kill-feed{display:none}
 }
 
 .touch-ui:not(.playing) #mobile-menu{display:none}
+/* Reserve independent space for the ammo panel and top-right utility buttons. */
+.touch-ui.playing .actions{bottom:max(96px,calc(env(safe-area-inset-bottom) + 84px))}
+.touch-ui.playing #map{right:168px}
+@media(orientation:portrait){.touch-ui.playing #map{right:14px}}
+@media(orientation:landscape) and (max-height:480px){.touch-ui.playing .actions{bottom:max(86px,calc(env(safe-area-inset-bottom) + 74px))}}
