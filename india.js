@@ -5,7 +5,7 @@ const seeds=[['Delhi','Delhi',77.21,28.61],['Jaipur','Rajasthan',75.79,26.91],['
 const cities=seeds.map(([name,region,lon,lat],id)=>({id,name,region,...project(lon,lat)}));
 function inRing(x,z,p){let inside=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;}return inside;}
 const bounds=INDIA_MAP_DATA.rings.map(p=>[Math.min(...p.map(v=>v[0])),Math.min(...p.map(v=>v[1])),Math.max(...p.map(v=>v[0])),Math.max(...p.map(v=>v[1]))]);
-function land(x,z){return INDIA_MAP_DATA.rings.some((p,i)=>x>=bounds[i][0]&&x<=bounds[i][2]&&z>=bounds[i][1]&&z<=bounds[i][3]&&inRing(x,z,p))||cities.some(c=>Math.hypot(x-c.x,z-c.z)<25);}
+function land(x,z){if(Math.abs(x-cities[0].x)<460&&Math.abs(z-cities[0].z)<460)return true;return INDIA_MAP_DATA.rings.some((p,i)=>x>=bounds[i][0]&&x<=bounds[i][2]&&z>=bounds[i][1]&&z<=bounds[i][3]&&inRing(x,z,p))||cities.some(c=>Math.hypot(x-c.x,z-c.z)<25);}
 function nearest(x,z){return cities.reduce((best,c)=>!best||Math.hypot(c.x-x,c.z-z)<Math.hypot(best.x-x,best.z-z)?c:best,null);}
 const types={car:{name:'Hatchback',max:34,reverse:9,accel:12,turn:1.15,r:1.2,color:'#768a95',w:1.8,h:1.35,l:3.8,wheels:4},suv:{name:'4×4 SUV',max:39,reverse:10,accel:13,turn:1.0,r:1.4,color:'#455d50',w:2.05,h:1.8,l:4.4,wheels:4},pickup:{name:'Pickup',max:33,reverse:9,accel:10,turn:.85,r:1.5,color:'#80705d',w:2.0,h:1.7,l:4.9,wheels:4},bike:{name:'Motorbike',max:44,reverse:5,accel:17,turn:1.65,r:.55,color:'#8b3f36',w:.55,h:1.0,l:1.9,wheels:2},scooter:{name:'Scooter',max:25,reverse:4,accel:10,turn:1.8,r:.5,color:'#c9bfa1',w:.65,h:.95,l:1.7,wheels:2},auto:{name:'Auto rickshaw',max:23,reverse:6,accel:9,turn:1.5,r:.85,color:'#b59d42',w:1.35,h:1.7,l:2.5,wheels:3},ambulance:{name:'Ambulance',max:31,reverse:8,accel:10,turn:.8,r:1.5,color:'#d3d6ce',w:2.05,h:2.3,l:4.6,wheels:4}};
 function fleet(x,z){return Object.keys(types).map((type,i)=>({type,x:x+(i%3-1)*6,z:z+10+Math.floor(i/3)*7,heading:0,speed:0}));}
@@ -13,6 +13,59 @@ function drive(v,throttle,steer,dt,blocked){const spec=types[v.type]||types.suv,
 function paintAtlas(ctx,w,h,player,vehicles=[]){ctx.clearRect(0,0,w,h);ctx.fillStyle='#122d3b';ctx.fillRect(0,0,w,h);const scale=Math.min(w,h)/3700,point=(x,z)=>[w/2+x*scale,h/2+z*scale];for(const ring of INDIA_MAP_DATA.rings){ctx.beginPath();ring.forEach((p,i)=>{const q=point(...p);i?ctx.lineTo(...q):ctx.moveTo(...q)});ctx.closePath();ctx.fillStyle='#687e60';ctx.fill();ctx.strokeStyle='#b5c28f';ctx.lineWidth=.6;ctx.stroke();}for(const c of cities){const p=point(c.x,c.z);ctx.fillStyle='#edcd85';ctx.fillRect(p[0]-1.5,p[1]-1.5,3,3);if(w>300){ctx.font='9px system-ui';ctx.fillText(c.name,p[0]+4,p[1]);}}if(player){const q=point(player.x,player.z);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(...q,w>300?5:3,0,Math.PI*2);ctx.fill();}}
 const atlasCache=new Map();
 function atlas(ctx,w,h,player){const key=w+'x'+h;let base=atlasCache.get(key);if(!base){base=document.createElement('canvas');base.width=w;base.height=h;const brush=base.getContext('2d');if(!brush){paintAtlas(ctx,w,h,player);return;}paintAtlas(brush,w,h,null);atlasCache.set(key,base);}ctx.clearRect(0,0,w,h);ctx.drawImage(base,0,0);if(player){const scale=Math.min(w,h)/3700;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(w/2+player.x*scale,h/2+player.z*scale,w>300?5:3,0,Math.PI*2);ctx.fill();}}
-const blocks=cities.flatMap(c=>Array.from({length:8},(_,i)=>({city:c.id,x:c.x+(i%2?1:-1)*(35+Math.floor(i/4)*16),z:c.z+(Math.floor(i/2)%2?1:-1)*35,w:10,d:12,h:4+(i%3)*3}))).filter(b=>land(b.x,b.z));
-window.AkrivaIndia={blocks,cities,types,fleet,drive,land,nearest,project,atlas,rings:INDIA_MAP_DATA.rings,triangles:INDIA_MAP_DATA.triangles,half:1850};
+// Original tactical district, inspired by Erangel's mix of urban, rural and industrial areas.
+// Coordinates are game metres in a compressed fictional sector, not geographic locations.
+const origin=cities[0];
+const pois=[['Pochinki','town',0,0,'Dense streets · enterable houses'],['Gatka','village',-210,-80,'Farm lanes · low cover'],['Military Base','military',0,280,'Hangars · runway · barracks'],['School','school',170,-80,'Courtyard · classrooms'],['Hospital','hospital',60,-180,'Medical supplies · ambulance'],['Farm','farm',-300,40,'Crop rows · barns'],['Power Station','power',315,100,'Turbines · industrial cover'],['Harbor','port',300,280,'Container lanes · dock'],['Quarry','quarry',-310,-230,'Rock cover · equipment'],['North Ridge','ridge',-50,-330,'Walkable summit · radio mast']].map(([name,kind,x,z,brief],id)=>({id,name,kind,x:origin.x+x,z:origin.z+z,brief}));
+const hills=[[-50,-330,100,32],[335,-200,95,27],[-340,310,85,24]].map(([x,z,r,h])=>({x:origin.x+x,z:origin.z+z,r,h}));
+function ground(x,z){let y=0;for(const a of hills){const q=Math.max(0,1-((x-a.x)**2+(z-a.z)**2)/(a.r*a.r));y=Math.max(y,a.h*q*q);}return y;}
+function terrainRay(o,d,max=300){if(!hills.some(h=>Math.hypot(o[0]-h.x,o[2]-h.z)<h.r+max))return max;let last=0;for(let t=.25;t<=max;t+=.75){if(o[1]+d[1]*t<ground(o[0]+d[0]*t,o[2]+d[2]*t)+.025){let a=last,b=t;for(let k=0;k<7;k++){const m=(a+b)/2;if(o[1]+d[1]*m<ground(o[0]+d[0]*m,o[2]+d[2]*m)+.025)b=m;else a=m;}return b;}last=t;}return max;}
+const buildings=[],props=[],roads=[],tacticalBlocks=[],sectorLoot=[];
+function part(x,y,z,w,h,d,color){return{x,y,z,w,h,d,color};}
+function addProp(p){props.push(p);if(p.solid)tacticalBlocks.push({...p,y:p.y-p.h/2});return p;}
+function prop(poi,dx,dz,w,h,d,color,kind='box',solid=true,y){return addProp({poi:poi.id,x:poi.x+dx,z:poi.z+dz,w,h,d,y:y??ground(poi.x+dx,poi.z+dz)+h/2,color,kind,solid});}
+function house(poi,dx,dz,w=11,d=13,h=5.6,color='#a08c72',roof=true){const x=poi.x+dx,z=poi.z+dz,parts=[],door=2.4,wall=.28;
+ const wallPart=(dx,y,dz,w,h,d,c=color)=>parts.push(part(x+dx,y,z+dz,w,h,d,c));
+ // Front doorway and two unobstructed window openings. Back and side windows stop incoming fire only at the masonry.
+ for(const side of[-1,1]){wallPart(side*(w/4+door/4),0,-d/2,(w-door)/2,h,wall);wallPart(side*(w/2-wall/2),0,0,wall,1.05,d);wallPart(side*(w/2-wall/2),2.25,0,wall,h-2.25,d);for(const q of[-d/3,d/3])wallPart(side*(w/2-wall/2),1.05,q,wall,1.2,d/3-1.6);}
+ wallPart(0,2.65,-d/2,door,h-2.65,wall);wallPart(0,0,d/2,w,1.05,wall);wallPart(0,2.25,d/2,w,h-2.25,wall);for(const side of[-1,1])wallPart(side*w*.37,1.05,d/2,w*.26,1.2,wall);
+ wallPart(0,h,0,w+.5,.22,d+.5,'#645e53');
+ const b={poi:poi.id,x,z,w,d,h,color,roof,parts};buildings.push(b);tacticalBlocks.push(...parts.map(p=>({...p,poi:poi.id})));sectorLoot.push({x,z:z-1,type:'ammo',taken:false});return b;}
+function road(a,b,width=8){roads.push({x:(a.x+b.x)/2,z:(a.z+b.z)/2,w:width,d:Math.hypot(a.x-b.x,a.z-b.z),rotation:Math.atan2(a.x-b.x,a.z-b.z)});}
+const town=pois[0];for(let row=-2;row<=2;row++)for(const col of[-2,-1,1,2])house(town,col*22,row*25,11+(row%2===0?2:0),13,5.6,['#a08c72','#9a9d90','#927b69'][(row+col+8)%3]);
+road({x:town.x,z:town.z-78},{x:town.x,z:town.z+78},10);for(const z of[-37.5,12.5])road({x:town.x-72,z:town.z+z},{x:town.x+72,z:town.z+z},8);
+const village=pois[1];for(const [x,z]of[[-27,-24],[23,-24],[-32,25],[25,27],[-55,0],[52,0]])house(village,x,z,10,12,4,'#aaa38a');
+const base=pois[2];for(const x of[-45,-15,15])house(base,x,-30,18,32,8,'#787e73',false);for(const x of[-40,-12,16])house(base,x,40,16,15,4.7,'#8d907e',false);
+prop(base,56,5,15,.06,145,'#565c59','runway',false,.10);for(let z=-58;z<70;z+=12)prop(base,56,z,.3,.02,5,'#d0c6a0','box',false,.15);
+for(const x of[-68,78])for(const z of[-65,65]){prop(base,x,z,3,5.8,3,'#71796d');prop(base,x,z,5,.2,5,'#545c53','box',true,6);}
+prop(base,-43,6,22,.04,20,'#5e6a61','helipad',false,.11);prop(base,-62,12,2,13,2,'#606a63','mast');
+const school=pois[3];house(school,-28,0,16,46,7,'#b0a584',false);house(school,0,-33,62,15,7,'#b0a584',false);house(school,28,0,16,46,7,'#b0a584',false);prop(school,0,5,34,.035,30,'#8b8f76','court',false,.12);
+const hospital=pois[4];house(hospital,-20,0,20,34,7.5,'#bbc2b5',false);house(hospital,20,0,20,34,7.5,'#bbc2b5',false);prop(hospital,-20,-17.2,3,.7,.15,'#a14d40','box',false,4);prop(hospital,-20,-17.3,.7,3,.15,'#a14d40','box',false,4);
+const farm=pois[5];house(farm,-28,-10,18,28,6,'#89775e');house(farm,26,15,10,12,4,'#a08c72');for(let i=0;i<15;i++)prop(farm,-40+i*5,47,.6,.24,36,i%2?'#70754d':'#8d865f','box',false,.15);
+const power=pois[6];house(power,-25,0,22,35,7,'#777f7b',false);for(const x of[9,28]){prop(power,x,0,10,9,10,'#818a85','tank');prop(power,x,-25,3,24,3,'#6b716a','mast');}
+const port=pois[7];for(let row=-2;row<=2;row++)for(const col of[-1,1]){prop(port,col*21,row*16,12,3.2,6,['#646e67','#8e6651','#5f7581'][(row+4)%3],'container');if(row%2===0)prop(port,col*21,row*16,12,3.2,6,'#7c8170','container',true,4.8);}prop(port,0,55,125,.08,24,'#515b58','box',false,.10);
+const quarry=pois[8];for(let i=0;i<12;i++){const a=i*2.399;prop(quarry,Math.sin(a)*(20+i*2),Math.cos(a)*(20+i*2),4+i%4,2+i%3,4+i%3,'#818073','rock');}house(quarry,27,0,12,16,4,'#8c8270',false);
+const ridge=pois[9];prop(ridge,-14,-8,1.4,17,1.4,'#68726a','mast',true,ground(ridge.x-14,ridge.z-8)+8.5);
+for(const [a,b]of[[0,1],[0,3],[0,4],[0,2],[1,5],[1,8],[2,7],[7,6],[3,6],[4,9]])road(pois[a],pois[b]);
+// A narrow fictional canal separates the airfield; two flat, drivable bridge crossings.
+const canal={x:origin.x,z:origin.z+157.5,w:760,d:25,bridges:[origin.x-160,origin.x+160]};
+for(const bx of canal.bridges){road({x:bx,z:origin.z+80},{x:bx,z:origin.z+240},12);for(const side of[-1,1])addProp({poi:2,x:bx+side*7.6,z:canal.z,y:.6,w:.4,h:1.2,d:31,color:'#8c9285',kind:'box',solid:true});}
+let edge=origin.x-380;for(const bx of canal.bridges){tacticalBlocks.push({x:(edge+bx-7)/2,z:canal.z,w:bx-7-edge,d:25,y:-1,h:1.8,water:true});edge=bx+7;}tacticalBlocks.push({x:(edge+origin.x+380)/2,z:canal.z,w:origin.x+380-edge,d:25,y:-1,h:1.8,water:true});
+// Deterministic cover, trees and supplies. Never put a blocking tree on a transit spawn or road.
+for(const p of pois){for(let i=0;i<14;i++){const a=i*2.39996,x=p.x+Math.sin(a)*(70+i%3*6),z=p.z+Math.cos(a)*(70+i%3*6);if(!land(x,z)||ground(x,z)>2||roads.some(r=>{const dx=x-r.x,dz=z-r.z,c=Math.cos(r.rotation),s=Math.sin(r.rotation);return Math.abs(dx*c-dz*s)<r.w/2+3&&Math.abs(dx*s+dz*c)<r.d/2+3;}))continue;addProp({poi:p.id,x,z,y:1.5,w:.45,h:3,d:.45,color:'#6b5f4c',kind:'tree',solid:true});}
+ for(const [i,dx,dz]of[[0,-6,-4],[1,6,-4],[2,0,-7]]){prop(p,dx,dz,2,.9,1.1,'#757b66','sandbag');sectorLoot.push({x:p.x+dx,z:p.z+dz+1.7,type:i===0?'weapon':i===1?'med':'ammo',weapon:['sniper','smg','shotgun'][p.id%3],taken:false});}}
+function nearbyPoi(x,z){return pois.reduce((a,b)=>Math.hypot(a.x-x,a.z-z)<Math.hypot(b.x-x,b.z-z)?a:b);}
+function inSector(x,z){return Math.abs(x-origin.x)<455&&Math.abs(z-origin.z)<455;}
+function sectorAtlas(ctx,w,h,player){const scale=Math.min(w,h)/910,point=(x,z)=>[w/2+(x-origin.x)*scale,h/2+(z-origin.z)*scale];ctx.clearRect(0,0,w,h);ctx.fillStyle='#606e55';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#758268';ctx.lineWidth=.5;for(let i=-400;i<=400;i+=100){ctx.beginPath();ctx.moveTo(...point(origin.x+i,origin.z-455));ctx.lineTo(...point(origin.x+i,origin.z+455));ctx.stroke();ctx.beginPath();ctx.moveTo(...point(origin.x-455,origin.z+i));ctx.lineTo(...point(origin.x+455,origin.z+i));ctx.stroke();}
+ for(const hill of hills){for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(...point(hill.x,hill.z),hill.r*scale*(1-i*.2),0,Math.PI*2);ctx.fillStyle=['#728064','#7f8a69','#8a9275','#9a9e81'][i];ctx.fill();}}
+ ctx.fillStyle='#345c6e';const q=point(canal.x-canal.w/2,canal.z-canal.d/2);ctx.fillRect(q[0],q[1],canal.w*scale,canal.d*scale);
+ for(const r of roads){ctx.strokeStyle='#c4b795';ctx.lineWidth=Math.max(1,r.w*scale);ctx.beginPath();ctx.moveTo(...point(r.x-Math.sin(r.rotation)*r.d/2,r.z-Math.cos(r.rotation)*r.d/2));ctx.lineTo(...point(r.x+Math.sin(r.rotation)*r.d/2,r.z+Math.cos(r.rotation)*r.d/2));ctx.stroke();}
+ ctx.fillStyle='#c3b79c';for(const b of buildings){const q=point(b.x-b.w/2,b.z-b.d/2);ctx.fillRect(q[0],q[1],b.w*scale,b.d*scale);}for(const p of pois){const q=point(p.x,p.z);ctx.fillStyle='#f2dfaf';ctx.font=(w>300?'bold 12px':'7px')+' system-ui';ctx.textAlign='center';ctx.fillText(p.name.toUpperCase(),q[0],q[1]-8);}
+ if(player){const q=point(player.x,player.z);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(...q,w>300?5:3,0,Math.PI*2);ctx.fill();}ctx.textAlign='left';ctx.fillStyle='#f1e7cf';ctx.font=(w>300?'11px':'7px')+' system-ui';ctx.fillText('N ↑  /  FICTIONAL SECTOR',8,h-9);
+}
+for(const l of sectorLoot)l.y=ground(l.x,l.z);
+const sector={origin,pois,hills,buildings,props,roads,canal,loot:sectorLoot,blocks:tacticalBlocks,ground,terrainRay,nearbyPoi,inSector,atlas:sectorAtlas};
+
+const blocks=cities.filter(c=>!inSector(c.x,c.z)).flatMap(c=>Array.from({length:8},(_,i)=>({city:c.id,x:c.x+(i%2?1:-1)*(35+Math.floor(i/4)*16),z:c.z+(Math.floor(i/2)%2?1:-1)*35,w:10,d:12,h:4+(i%3)*3}))).filter(b=>land(b.x,b.z)).concat(tacticalBlocks);
+window.AkrivaIndia={sector,ground,terrainRay,blocks,cities,types,fleet,drive,land,nearest,project,atlas,rings:INDIA_MAP_DATA.rings,triangles:INDIA_MAP_DATA.triangles,half:1850};
 })();

@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id),KEY='akriva-operator-v1';
 const empty=()=>({xp:0,matches:0,wins:0,kills:0,badges:[],history:[]});
 const number=v=>Number.isFinite(v)?Math.max(0,Math.min(100000000,Math.floor(v))):0;
 const BADGES={first:'First victory',ghost:'Ghost operator',signal:'Signal breaker',marksman:'Precision operator'};
-const MODES={squad104:'Squad 104',india:'India Expedition',signal:'Signal Rush',infiltration:'Operation Blackout',battle:'Battle Royale',squad:'Squad Battle',coop:'Party Match'};
+const MODES={sector:'Frontier Sector',squad104:'Squad 104',india:'India Expedition',signal:'Signal Rush',infiltration:'Operation Blackout',battle:'Battle Royale',squad:'Squad Battle',coop:'Party Match'};
 let profile=empty(),durable=true;
 try{const raw=JSON.parse(localStorage.getItem(KEY)||'null');if(raw&&typeof raw==='object'){for(const k of ['xp','matches','wins','kills'])profile[k]=number(raw[k]);profile.badges=Array.isArray(raw.badges)?[...new Set(raw.badges.filter(k=>Object.hasOwn(BADGES,k)))]:[];profile.history=Array.isArray(raw.history)?raw.history.slice(0,8).filter(r=>r&&Object.hasOwn(MODES,r.mode)).map(r=>({mode:r.mode,won:r.won===true,kills:number(r.kills),seconds:number(r.seconds),xp:number(r.xp)})):[];}}catch{durable=false;}
 function rank(){const level=1+Math.floor(profile.xp/500),names=['RECRUIT','PATHFINDER','RANGER','VANGUARD','SENTINEL'];return{level,name:names[Math.min(4,Math.floor((level-1)/3))],progress:profile.xp%500};}
@@ -13,6 +13,6 @@ function render(){const r=rank();$('operator-rank').textContent=r.name+' / LEVEL
 function record(run){const mode=Object.hasOwn(MODES,run.mode)?run.mode:'battle',won=run.won===true,kills=number(run.kills),seconds=number(run.seconds),objectives=Math.min(4,number(run.objectives));const xp=(seconds>=20||won)?100+kills*20+objectives*80+(won?250:0)+(won&&mode==='signal'?150:0):0;profile.matches++;profile.wins+=won?1:0;profile.kills+=kills;profile.xp+=xp;const award=key=>{if(!profile.badges.includes(key))profile.badges.push(key);};if(won)award('first');if(won&&mode==='infiltration'&&Number.isFinite(run.alarm)&&run.alarm<25)award('ghost');if(won&&mode==='signal')award('signal');if(number(run.headshots)>=3)award('marksman');profile.history.unshift({mode,won,kills,seconds,xp});profile.history=profile.history.slice(0,8);try{localStorage.setItem(KEY,JSON.stringify(profile));durable=true;}catch{durable=false;}render();return xp;}
 function choose(mode){const menu=$('mission-mode');menu.value=mode;menu.onchange?.();$('operations-hub').close();$('start').focus?.();}
 $('open-hub').onclick=()=>{render();$('operations-hub').showModal();};$('hub-close').onclick=()=>$('operations-hub').close();
-for(const mode of ['squad104','india','signal','infiltration','battle'])$('contract-'+mode).onclick=()=>choose(mode);
+for(const mode of ['sector','squad104','india','signal','infiltration','battle'])$('contract-'+mode).onclick=()=>choose(mode);
 window.AkrivaPlatform={record,refresh:render};render();$('operations-hub').showModal();
 })();

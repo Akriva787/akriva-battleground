@@ -279,3 +279,6 @@ body:not(.playing) #kill-feed{display:none}
  #landscape-gate .primary{min-height:52px;width:min(290px,100%);margin:10px 0}
  #landscape-gate #landscape-status{font-size:11px;color:#8fa5aa}
 }
+
+/* Field atlas and Frontier deployment. */
+.atlas-tabs{display:flex;gap:8px;margin:12px 0}.atlas-tabs button{flex:1}.atlas-tabs button[aria-pressed="true"]{background:#d7c79a;color:#172022;border-color:#d7c79a}.sector-contract{padding:24px;margin:20px 0;border:1px solid #857c60;background:linear-gradient(115deg,#28382e,#19262d)}.sector-contract small{color:#dbc68e;letter-spacing:.15em}.sector-contract h3{font-size:26px;margin:10px 0}.sector-contract p{color:#bec8be;line-height:1.6}.sector-contract button{background:#d7c79a;color:#172022;padding:14px 22px}.india-atlas canvas{max-width:100%;height:auto}.india-atlas select{width:100%}

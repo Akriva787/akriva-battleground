@@ -107,3 +107,7 @@ For one person playing immediately, Play solo vs bots starts the existing offlin
 Seven original procedural designs: hatchback, 4x4 SUV, pickup, motorbike, scooter, auto rickshaw and ambulance. Bevelled body/cabin geometry, reflective-shaded windows, mirrors, grilles, separate tyre and alloy geometry, rotating/steering wheels and a rider pose for two-wheelers replace the simple block/ball models. Geometry is cached and reused. These are custom browser-game models, not licensed manufacturer models or a claim of photorealistic BGMI assets.
 
 Vehicle Garage on the deployment screen offers one-click test drives in India Expedition. Every online city hub also has all seven types. Online Solo/Duo/Squad share server-owned entry, one exclusive driver seat per vehicle, speed/steering/brakes/collisions, movement snapshots, exit and disconnect release. Walk within 4m and press V / Drive. WASD/left joystick drives; Space/Brake stops; V/Exit gets out. Drivers cannot fire. Passenger seats, vehicle damage, fuel and online ambulance healing are not included.
+
+## Frontier Sector update
+
+New: ten connected districts, enterable towns, military airfield, school, hospital, farms, harbor, quarry, walkable hills and two bridge crossings. Choose Frontier Sector in the Operations Hub. See [FRONTIER-GUIDE.md](FRONTIER-GUIDE.md) for controls, online scope and validation limits.
