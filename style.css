@@ -285,3 +285,20 @@ body:not(.playing) #kill-feed{display:none}
 
 /* A single navigation feature in both desktop and touch layouts. */
 #route-status{position:fixed;z-index:6;top:235px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:9px;padding:7px 12px;background:#17242ddd;border:1px solid #d9bd6f88;border-radius:6px;color:#f1d087;font-size:11px;letter-spacing:.05em;pointer-events:none;max-width:80vw}#route-status[hidden]{display:none}#route-arrow{font-size:22px;display:block;line-height:1}.waypoint-actions{display:flex;gap:10px;margin:10px 0}.waypoint-actions button{min-height:44px;flex:1}.waypoint-actions #mark-waypoint{background:#d7c79a;color:#17242d}.touch-ui #route-status{top:76px;font-size:10px}@media(min-width:1000px){body:not(.touch-ui) #route-status{top:165px}}@media(orientation:landscape) and (max-height:600px){.touch-ui #route-status{top:49px;font-size:8px;padding:4px 7px}#route-arrow{font-size:16px}}
+
+/* Operator select: side panel; the menu scene behind it frames the turning soldier. */
+.operator-launch b{color:#e5bd6d;font-weight:800}
+.operator-select{position:fixed;z-index:20;inset:auto max(16px,env(safe-area-inset-right,0px)) auto auto;top:50%;transform:translateY(-50%);margin:0;width:min(420px,calc(100vw - 32px));max-height:calc(100svh - 32px);overflow:auto;padding:22px;border:1px solid #e5bd6d55;border-radius:10px;background:linear-gradient(160deg,#122329f2,#0c171cf2);color:#eef2ee;box-shadow:0 24px 60px #0008}
+.operator-select h2{margin:6px 0 4px;font-size:28px;letter-spacing:-.02em;text-wrap:balance}
+.operator-select #operator-current{margin:0 0 14px;color:#cdd8d6;font-size:13px}
+.operator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.outfit-card{display:grid;gap:6px;justify-items:start;text-align:left;padding:10px;border:1px solid #ffffff22;border-radius:8px;background:#0f1d22;color:#eef2ee;cursor:pointer;transition:border-color .15s,transform .15s}
+.outfit-card:hover{border-color:#e5bd6d88;transform:translateY(-1px)}
+.outfit-card:focus-visible{outline:2px solid #e5bd6d;outline-offset:2px}
+.outfit-card.selected{border-color:#e5bd6d;box-shadow:inset 0 0 0 1px #e5bd6d}
+.operator-swatch{width:100%;height:34px;border-radius:5px;border:1px solid #0006}
+.outfit-card strong{font-size:13px}.outfit-card small{font-size:10px;color:#a8c0ca;line-height:1.35}
+.operator-note{margin:14px 0;font-size:11px;color:#9fb3b8}
+body.operator-mode #start-screen,body.operator-mode .operator-card,body.operator-mode .settings,body.operator-mode .footer,body.operator-mode #rotate-hint{opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.outfit-card{transition:none}}
+@media(max-width:700px){.operator-select{inset:auto max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));top:auto;transform:none;width:auto;max-height:58svh}.operator-select h2{font-size:22px}}
