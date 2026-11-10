@@ -1,16 +1,15 @@
 # AKRIVA asset notices
 
-## Soldier character
+## Operator roster
 
-Mixamo "Vanguard" soldier as distributed in the three.js examples (`Soldier.glb`), with its idle/walk/run animations baked into frames and resized to 1.84 metres. The operator outfits in the game are colour treatments of this texture generated at runtime; no third-party game outfits, characters or logos are used.
+Characters from Quaternius's "Ultimate Animated Character Pack" (CC0), with their own idle/walk/run animations baked into frames, arms posed to hold a rifle and skin tones chosen for Akriva. The military soldier models from the pack are not used.
 
-- Model and animation source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
-- Example attribution: https://threejs.org/examples/webgl_animation_skinning_blending.html
-- Mixamo usage terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+- Pack: https://quaternius.com/packs/ultimatedanimatedcharacter.html
+- License: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
 
 ## Mira operator
 
-Mixamo "Michelle" character as distributed in the three.js examples (`Michelle.glb`), simplified to about 14,000 triangles, with the soldier's idle/walk/run animations retargeted and baked into frames. The in-game name "Mira" is original to Akriva.
+Mixamo "Michelle" character as distributed in the three.js examples (`Michelle.glb`), simplified to about 14,000 triangles, with the idle/walk/run animations of the three.js example soldier retargeted and baked into frames. The in-game name "Mira" is original to Akriva.
 
 - Model source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Michelle.glb
 - Mixamo usage terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
