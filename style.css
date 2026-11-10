@@ -183,3 +183,84 @@ body:not(.playing) #kill-feed{display:none}
 @media(orientation:portrait){.touch-ui.playing #map{right:14px}}
 @media(orientation:landscape) and (max-height:480px){.touch-ui.playing .actions{bottom:max(86px,calc(env(safe-area-inset-bottom) + 74px))}}
 .touch-ui.playing.touch-settings-open header>div:last-child>button:not(#mobile-menu):not(#full){display:flex;align-items:center;min-height:38px}
+
+/* AKRIVA mobile combat controller. */
+#mobile-aim-zone,#mobile-sprint,#mobile-drive-pad,.touch-tuning{display:none}
+#mobile-quick{display:flex;flex-wrap:wrap;gap:6px;max-width:280px;pointer-events:auto}
+.touch-ui .touch-tuning{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:10px}
+.touch-tuning input{width:120px;accent-color:var(--gold)}
+.touch-ui.playing #mobile-aim-zone{display:block;position:fixed;z-index:4;inset:22% 0 34% 38%;touch-action:none;pointer-events:auto}
+#mobile-aim-zone span{position:absolute;right:28%;top:8px;color:#fff6;font-size:8px;letter-spacing:2px;pointer-events:none}
+.touch-ui.playing #controls{z-index:8;pointer-events:none}
+.touch-ui.playing #joystick{width:126px;height:126px;bottom:max(68px,calc(env(safe-area-inset-bottom) + 54px));left:max(28px,env(safe-area-inset-left));border:2px solid #fff4;background:radial-gradient(circle,#fff0 36%,#ffffff12 37%,#ffffff12 38%,#18262b55 39%,#18262b55 67%,#fff2 68%,#fff2 69%,#fff0 70%)}
+.touch-ui #joystick:before{content:'MOVE / PUSH UP TO SPRINT';top:-17px;font-size:7px;letter-spacing:.8px;white-space:nowrap}
+.touch-ui #stick-thumb{width:50px;height:50px;left:calc(50% - 25px);top:calc(50% - 25px);border:2px solid #fff8;background:#dce7dc52}
+.touch-ui.playing #mobile-sprint{display:flex;position:absolute;left:max(63px,calc(env(safe-area-inset-left) + 35px));bottom:max(208px,calc(env(safe-area-inset-bottom) + 194px));width:56px;height:46px;min-height:44px;pointer-events:auto;align-items:center;justify-content:center;border-radius:18px;font-size:9px;background:#17282b70;border:1px solid #fff6;touch-action:manipulation}
+.touch-ui.playing #mobile-sprint[aria-pressed=true]{background:#dec284da;color:#17232b;border-color:#fff0b9}
+.touch-ui.playing .actions{position:absolute;inset:0;display:block;width:auto;max-width:none;pointer-events:none;transform:none}
+.touch-ui.playing .actions>button{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:54px;height:54px;min-height:44px;padding:4px;font-size:9px;line-height:1.2;border-radius:50%;background:#1b2b2d66;border:1.5px solid #f1f3dc80;box-shadow:inset 0 0 0 3px #ffffff08,0 2px 9px #0002;pointer-events:auto}
+.touch-ui.playing #fire{right:max(22px,env(safe-area-inset-right));bottom:142px;width:84px;height:84px;min-height:84px;background:#d7c79460;color:#fff5d4;border:2px solid #f3e5b7cc;font-size:15px;letter-spacing:1px;box-shadow:inset 0 0 0 6px #ffffff10,0 0 0 4px #ffffff0a}
+.touch-ui.playing #jump{right:max(22px,env(safe-area-inset-right));bottom:244px;width:56px;height:56px;background:#1b2b2d66}
+.touch-ui.playing #aim{right:max(118px,calc(env(safe-area-inset-right) + 96px));bottom:240px;width:54px;height:54px}
+.touch-ui.playing #crouch{right:max(118px,calc(env(safe-area-inset-right) + 96px));bottom:174px}
+.touch-ui.playing #prone{right:max(118px,calc(env(safe-area-inset-right) + 96px));bottom:108px;height:54px;align-self:auto}
+.touch-ui.playing #reload{right:max(37px,calc(env(safe-area-inset-right) + 15px));bottom:78px}
+.touch-ui.playing #support-toggle{right:max(184px,calc(env(safe-area-inset-right) + 162px));bottom:108px;width:46px;height:46px;min-height:44px;border-radius:14px;font-size:8px}
+.touch-ui.playing #interact{right:max(184px,calc(env(safe-area-inset-right) + 162px));bottom:174px}
+.touch-ui.playing.support-open #support-controls{position:absolute;right:max(184px,calc(env(safe-area-inset-right) + 162px));bottom:166px;width:188px;grid-template-columns:1fr;pointer-events:auto}
+.touch-ui.playing #mobile-quick{position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);display:grid;grid-template-columns:104px 48px 48px 62px;gap:7px;width:283px;max-width:none;pointer-events:none}
+.touch-ui.playing #mobile-quick button{pointer-events:auto;min-height:46px;width:100%;padding:6px;font-size:9px;background:#16262ba1;border:1px solid #fff5;border-radius:9px;touch-action:manipulation}
+.touch-ui.playing #mobile-quick #gun-cycle{border-color:#dbc6909c;color:#f6e5ba}
+.touch-ui.playing #mobile-quick button:disabled{opacity:.32}
+.touch-ui.playing #mobile-drive-pad{display:none;position:absolute;left:max(24px,env(safe-area-inset-left));bottom:80px;grid-template-columns:50px 60px 50px;gap:8px;pointer-events:none}
+.touch-ui.playing #mobile-drive-pad button{pointer-events:auto;width:100%;height:52px;font-size:11px;border-radius:12px;touch-action:none;background:#15262b99;border:1px solid #fff8}
+#mobile-drive-pad button[data-dir=up]{grid-column:2;grid-row:1}
+#mobile-drive-pad button[data-dir=left]{grid-column:1;grid-row:2}
+#mobile-drive-pad button[data-dir=down]{grid-column:2;grid-row:2;font-size:9px}
+#mobile-drive-pad button[data-dir=right]{grid-column:3;grid-row:2}
+.touch-ui.playing.driving-mobile #mobile-drive-pad{display:grid}
+.touch-ui.playing.driving-mobile #joystick,.touch-ui.playing.driving-mobile #mobile-sprint,.touch-ui.playing.driving-mobile #fire,.touch-ui.playing.driving-mobile #aim,.touch-ui.playing.driving-mobile #reload,.touch-ui.playing.driving-mobile #crouch,.touch-ui.playing.driving-mobile #prone{display:none}
+.touch-ui.playing.driving-mobile #jump{bottom:132px;right:28px;width:76px;height:76px;background:#c49b5b66}
+.touch-ui.playing .actions>button:active,#mobile-quick button:active,#mobile-drive-pad button:active{background:#e3ca8a77;border-color:#fff2c0;transform:scale(.96)}
+.touch-ui.playing #aim:before{content:'⊕';font-size:24px;line-height:1}
+.touch-ui.playing #jump:before{content:'↟';font-size:22px;line-height:1}
+.touch-ui.playing #reload:before{content:'⟳';font-size:23px;line-height:1}
+.touch-ui.playing #crouch:before{content:'⌁';font-size:24px;line-height:1}
+.touch-ui.playing #prone:before{content:'━';font-size:22px;line-height:1}
+.touch-ui.playing #support-toggle:before{content:'•••';font-size:15px;line-height:1}
+.touch-ui.playing #mobile-quick #vehicle:not(:disabled){background:#d5bd7bdd;color:#17262d;border-color:#ffe9ac;box-shadow:0 0 0 3px #ffe0a31c}
+.touch-ui.playing #mobile-quick #loot:not(:disabled){border-color:#e6d8b6aa}
+@media(orientation:portrait){
+ .touch-ui.playing #mobile-quick{left:16px;right:auto;bottom:272px;width:108px;transform:none;grid-template-columns:50px 50px;gap:8px}
+ .touch-ui.playing #mobile-quick button{min-height:48px;font-size:8px}
+ .touch-ui.playing #joystick{left:20px;width:110px;height:110px;bottom:72px}
+ .touch-ui.playing #mobile-sprint{left:47px;bottom:200px}
+ .touch-ui.playing #fire{right:16px;width:72px;height:72px;min-height:72px;bottom:144px}
+ .touch-ui.playing #jump{right:16px;bottom:236px;width:52px;height:52px}
+ .touch-ui.playing #aim{right:82px;bottom:288px;width:50px;height:50px}
+ .touch-ui.playing #crouch{right:102px;bottom:224px;width:48px;height:48px}
+ .touch-ui.playing #prone{right:102px;bottom:160px;width:48px;height:48px}
+ .touch-ui.playing #reload{right:25px;bottom:78px;width:52px;height:52px}
+ .touch-ui.playing #support-toggle{right:102px;bottom:100px}
+ .touch-ui.playing #interact{right:16px;bottom:308px}
+ .touch-ui.playing.support-open #support-controls{right:16px;bottom:360px;width:180px}
+ .touch-ui.playing #mobile-aim-zone{inset:24% 0 42% 36%}
+ .touch-ui.playing #mobile-aim-zone span{font-size:7px;right:18%}
+ .touch-ui.playing #mobile-drive-pad{left:14px;bottom:90px;grid-template-columns:42px 52px 42px;gap:6px}
+}
+@media(orientation:landscape) and (max-height:360px){
+ .touch-ui.playing #jump{bottom:212px;width:50px;height:50px}
+ .touch-ui.playing #aim{bottom:212px;width:50px;height:50px}
+ .touch-ui.playing #fire{bottom:126px;width:76px;height:76px;min-height:76px}
+ .touch-ui.playing #crouch{bottom:150px;width:48px;height:48px}
+ .touch-ui.playing #prone{bottom:90px;width:48px;height:48px}
+ .touch-ui.playing #reload{bottom:64px;width:50px;height:50px}
+ .touch-ui.playing #support-toggle{bottom:90px}
+ .touch-ui.playing #joystick{width:106px;height:106px;bottom:56px}
+ .touch-ui.playing #mobile-sprint{bottom:178px;height:44px}
+ .touch-ui.playing #mobile-quick{bottom:10px}
+ .touch-ui.playing #interact{bottom:150px}
+}
+.touch-ui.playing #mobile-aim-zone{z-index:1}
+.touch-ui.playing .actions,.touch-ui.playing #mobile-quick,.touch-ui.playing #mobile-sprint,.touch-ui.playing #joystick,.touch-ui.playing #mobile-drive-pad{z-index:6}
+@media(orientation:landscape) and (max-height:360px){.touch-ui.playing.support-open #support-controls{bottom:108px;right:244px}}
