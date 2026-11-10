@@ -1,20 +1,14 @@
 # AKRIVA asset notices
 
-## Forest Elf character
+## Soldier character
 
-Forest Elf Set (Pubg/Bgmi) Walk Animation by YT-XTREMENINJA (@dograanurag786). Downloaded through Sketchfab's official GLB download on 10 November 2026. The uploader lists CC Attribution (CC BY 4.0).
+Mixamo "Vanguard" soldier as distributed in the three.js examples (`Soldier.glb`), with its idle/walk/run animations baked into frames and resized to 1.84 metres. The operator outfits in the game are colour treatments of this texture generated at runtime; no third-party game outfits, characters or logos are used.
 
-- Model: https://sketchfab.com/3d-models/forest-elf-set-pubgbgmi-walk-animation-03d8c71082ce4d36af4b863429c9499e
-- Creator: https://sketchfab.com/dograanurag786
-- Listed license: https://creativecommons.org/licenses/by/4.0/
-
-Changes for Akriva: simplified mesh to 29,353 triangles, packed the eight original texture materials into one 2048 x 1024 atlas, retargeted idle/walk/run animation, baked animation frames and resized to 1.84 metres. Original character colors and outfit retained. A game-held rifle is rendered separately. This community-uploaded character is not an endorsement of Akriva by the original game's publisher.
-
-Idle/Walk/Run animation data adapted from Mixamo / three.js Soldier.glb:
-
-- Source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
+- Model and animation source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
 - Example attribution: https://threejs.org/examples/webgl_animation_skinning_blending.html
-- Mixamo usage: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+- Mixamo usage terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+
+Map location names in the Frontier Sector are original to Akriva.
 
 Vehicle designs are original unbranded procedural models.
 

@@ -6,9 +6,9 @@ The fictional sector spans 910 game metres across and sits around the Delhi hub 
 
 ## Locations
 
-- **Pochinki:** 20 enterable houses on a connected street grid.
-- **Gatka:** six rural houses and farm lanes.
-- **Military Base:** three open-door hangars, barracks, runway, helipad and lookout structures.
+- **Rajpura Town:** 20 enterable houses on a connected street grid.
+- **Kheda Village:** six rural houses and farm lanes.
+- **Garrison Airfield:** three open-door hangars, barracks, runway, helipad and lookout structures.
 - **School:** three classroom wings around a court.
 - **Hospital:** two medical wings, supplies and a driveable ambulance in the local fleet.
 - **Farm:** barns and crop rows.
