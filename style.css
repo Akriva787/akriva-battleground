@@ -267,3 +267,15 @@ body:not(.playing) #kill-feed{display:none}
 .touch-ui.playing.driving-mobile .weapon #ammo,.touch-ui.playing.driving-mobile #support-status{display:none}
 .touch-ui.playing.driving-mobile #weapon-state{font-size:20px;letter-spacing:0;color:#f3e7c7;margin-top:6px}
 .touch-ui.playing.driving-mobile #jump:before{content:'▣';font-size:23px}
+
+/* Mobile gameplay is landscape-only; browsers keep control of OS orientation. */
+#landscape-gate{display:none}
+@media(orientation:portrait){
+ .touch-ui.playing #landscape-gate{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px max(24px,env(safe-area-inset-left));text-align:center;background:#101c24f5;touch-action:manipulation}
+ #landscape-gate .rotate-phone{display:flex;align-items:center;justify-content:center;width:100px;height:64px;border:2px solid #e1c18a;border-radius:13px;color:#e1c18a;font-size:46px;margin-bottom:14px;box-shadow:0 0 70px #dfbd6920}
+ #landscape-gate small{font-size:9px;letter-spacing:3px;color:#d2ba87}
+ #landscape-gate h2{font-size:32px;line-height:1.1;letter-spacing:-1px;margin:0;color:#f1eddf}
+ #landscape-gate p{font-size:13px;line-height:1.6;max-width:290px;margin:0;color:#b9c8ca}
+ #landscape-gate .primary{min-height:52px;width:min(290px,100%);margin:10px 0}
+ #landscape-gate #landscape-status{font-size:11px;color:#8fa5aa}
+}
