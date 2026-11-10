@@ -8,6 +8,13 @@ Mixamo "Vanguard" soldier as distributed in the three.js examples (`Soldier.glb`
 - Example attribution: https://threejs.org/examples/webgl_animation_skinning_blending.html
 - Mixamo usage terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
 
+## Mira operator
+
+Mixamo "Michelle" character as distributed in the three.js examples (`Michelle.glb`), simplified to about 14,000 triangles, with the soldier's idle/walk/run animations retargeted and baked into frames. The in-game name "Mira" is original to Akriva.
+
+- Model source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Michelle.glb
+- Mixamo usage terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+
 Map location names in the Frontier Sector are original to Akriva.
 
 Vehicle designs are original unbranded procedural models.

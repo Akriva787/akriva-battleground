@@ -16,7 +16,7 @@ Open http://localhost:8000 in a WebGL-enabled browser. Keep the terminal running
 
 1. Create a new repository, for example `akriva-gamining-battleground`.
 2. Extract this ZIP and upload the **contents** of this folder into the repository root. Do not upload just the ZIP. `index.html` must be at the root.
-3. Include `soldier-data.js`, `tactical-theme.wav`, `style.css` and `game.js`; the game needs these files.
+3. Include `soldier-data.js`, `characters-data.js`, `tactical-theme.wav`, `style.css` and `game.js`; the game needs these files.
 4. Include the asset notices alongside the game.
 
 ## GitHub Pages
@@ -61,6 +61,7 @@ Jumping is unavailable while driving. Land before jumping again. Prone mode supp
 - `style.css`: interface and touch layout.
 - `game.js`: WebGL renderer, movement, camera, combat, bots, missions, equipment, audio and input.
 - `soldier-data.js`: embedded, transformed soldier animation and texture data, plus the terrain texture.
+- `characters-data.js`: extra operator models (Mira), baked the same way as the soldier.
 - `tactical-theme.wav`: original background music loop.
 - `ASSET-NOTICES.md`: third-party asset credits and source links.
 - `scripts/build-single-file.py`: optional offline single-file HTML exporter.

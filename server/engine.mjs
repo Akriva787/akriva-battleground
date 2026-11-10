@@ -3,7 +3,7 @@ import fs from 'node:fs';import {randomUUID} from 'node:crypto';
 export const CAPACITY=104,SQUAD_SIZE=4,SQUADS=26;
 export const MODES=Object.freeze({solo:1,duo:2,squad:4});
 // A dropped player keeps their slot (and health) this long and can resume with their token.
-const OUTFIT_IDS=new Set(['vanguard','woodland','urban','night','monsoon','arctic','crimson']);
+const OUTFIT_IDS=new Set(['vanguard','woodland','urban','night','monsoon','arctic','crimson','mira']);
 export const GRACE_MS=Number(process.env.RECONNECT_GRACE_MS)||45000;
 const holding=p=>p.hp>0&&(p.connected||Date.now()-p.droppedAt<GRACE_MS);
 export const WEAPONS={ranger:{mag:30,reserve:180,damage:34,head:75,rate:.14,reload:1.6,range:120,pellets:1},smg:{mag:40,reserve:200,damage:22,head:44,rate:.075,reload:1.3,range:65,pellets:1},sniper:{mag:5,reserve:40,damage:85,head:125,rate:1.15,reload:2.5,range:200,pellets:1},shotgun:{mag:8,reserve:40,damage:13,head:19,rate:.8,reload:2.1,range:28,pellets:6}};
