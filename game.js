@@ -118,7 +118,7 @@ function mobileControlHud(){
  document.body.classList.toggle('driving-mobile',!!game?.driving);
  ui('mobile-sprint','textContent',mobileRun?'Stop run':'Sprint');if(hudCache.get('mobile-run')!==mobileRun){hudCache.set('mobile-run',mobileRun);$('mobile-sprint').setAttribute('aria-pressed',String(mobileRun));}
  if(!touchInput)return;
- ui('crouch','textContent',game?.crouch?'Stand':'Crouch');ui('prone','textContent',game?.prone?'Stand':'Prone');
+ const crouchLabel=game?.crouch?'Stand':'Crouch',proneLabel=game?.prone?'Stand':'Prone';if($('crouch').textContent!==crouchLabel)$('crouch').textContent=crouchLabel;if($('prone').textContent!==proneLabel)$('prone').textContent=proneLabel;
  ui('gun-cycle','textContent','Switch gun');ui('medkit','textContent','Heal');ui('loot','textContent','Loot');
 }
 $('mobile-sprint').onclick=()=>{if(!game||game.phase!=='playing'||game.driving)return;mobileRun=!mobileRun;autoRun=mobileRun;if(mobileRun&&(game.crouch||game.prone)&&!setStance('stand')){mobileRun=false;autoRun=false;}hud();};
