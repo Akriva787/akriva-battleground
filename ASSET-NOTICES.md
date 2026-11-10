@@ -1,14 +1,14 @@
 # AKRIVA asset notices
 
-## Tactical human character
+## Forest Elf character
 
-Military tactical suit (LowPolyGameReady) by DanlyVostok (1799danly), CC BY 4.0. Original model and license were verified through Sketchfab's public model metadata.
+Forest Elf Set (Pubg/Bgmi) Walk Animation by YT-XTREMENINJA (@dograanurag786). Downloaded through Sketchfab's official GLB download on 10 November 2026. The uploader lists CC Attribution (CC BY 4.0).
 
-- Creator/model: https://sketchfab.com/3d-models/military-tactical-suit-lowpolygameready-ef698ce36b1545a78ce592dd3db4c7ed
-- License: https://creativecommons.org/licenses/by/4.0/
-- Asset copy: https://github.com/cktang88/3d-fps/blob/main/public/assets/models/characters/soldier_tac.glb
+- Model: https://sketchfab.com/3d-models/forest-elf-set-pubgbgmi-walk-animation-03d8c71082ce4d36af4b863429c9499e
+- Creator: https://sketchfab.com/dograanurag786
+- Listed license: https://creativecommons.org/licenses/by/4.0/
 
-Changes for Akriva: omitted optional headset with incompatible attachment offsets; repacked seven texture materials into atlases; retargeted animations; baked animation frames; resized to 1.84 metres; added a game-held rifle. This is a generic tactical human wearing a cap and face covering.
+Changes for Akriva: simplified mesh to 29,353 triangles, packed the eight original texture materials into one 2048 x 1024 atlas, retargeted idle/walk/run animation, baked animation frames and resized to 1.84 metres. Original character colors and outfit retained. A game-held rifle is rendered separately. This community-uploaded character is not an endorsement of Akriva by the original game's publisher.
 
 Idle/Walk/Run animation data adapted from Mixamo / three.js Soldier.glb:
 
@@ -16,7 +16,7 @@ Idle/Walk/Run animation data adapted from Mixamo / three.js Soldier.glb:
 - Example attribution: https://threejs.org/examples/webgl_animation_skinning_blending.html
 - Mixamo usage: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
 
-No BGMI models, textures or characters are included. Vehicle designs are original unbranded procedural models.
+Vehicle designs are original unbranded procedural models.
 
 ## Ground surface
 
@@ -46,4 +46,4 @@ Concrete Wall 006, Asphalt 02 and Red Brick albedo and OpenGL normal maps by Pol
 - https://polyhaven.com/a/red_brick
 - License: https://polyhaven.com/license
 
-No BGMI graphics, maps or characters are included.
+World materials and game maps are separate from the character asset credited above.
