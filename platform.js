@@ -14,5 +14,7 @@ function record(run){const mode=Object.hasOwn(MODES,run.mode)?run.mode:'battle',
 function choose(mode){const menu=$('mission-mode');menu.value=mode;menu.onchange?.();$('operations-hub').close();$('start').focus?.();}
 $('open-hub').onclick=()=>{render();$('operations-hub').showModal();};$('hub-close').onclick=()=>$('operations-hub').close();
 for(const mode of ['sector','squad104','india','signal','infiltration','battle'])$('contract-'+mode).onclick=()=>choose(mode);
-window.AkrivaPlatform={record,refresh:render};render();$('operations-hub').showModal();
+window.AkrivaPlatform={record,refresh:render};render();
+// Open the hub automatically only on a first visit (and never over an invitation).
+let hubSeen=false;try{hubSeen=localStorage.getItem('akriva-hub-seen')==='1';localStorage.setItem('akriva-hub-seen','1');}catch{}if(!hubSeen&&!String(location.hash).includes('invite='))$('operations-hub').showModal();
 })();
