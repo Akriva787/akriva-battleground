@@ -16,7 +16,7 @@ Open `http://localhost:8787` on the same computer. The parent folder must contai
 
 Choose **Squad 104** in Operations Hub. The WebSocket URL is filled automatically when using the server-hosted game. Enter a player name and a shared room code. Optional squad code: give the same code to the four members of your squad. Empty squad code uses automatic four-player allocation. The first connected player is the host. Only the host can start, with at least two different squads connected. Empty slots remain empty; a match is not falsely labelled as full.
 
-The match deploys after a ten-second countdown. No new players can join a started room. Last surviving squad wins. The zone begins closing after two minutes. A twenty-minute timeout ends the match without declaring a winner if more than one squad remains.
+The match deploys after a ten-second countdown. No new players can join a started room. Last surviving squad wins. Lobbies with up to ten teams deploy at Frontier Sector locations with a zone sized to the lobby (closing after one minute, to 45 m over six minutes); larger lobbies use the national map with a 2,600 m zone that begins closing after two minutes. A twenty-minute timeout ends the match without declaring a winner if more than one squad remains.
 
 ## Public deployment
 
@@ -32,7 +32,7 @@ The server owns player positions, movement speed, collisions, shooting cadence, 
 
 Player state is simulated at 20 Hz. Snapshots are sent at 10 Hz, using nearby-player interest filtering and compact actor records. Squad members remain visible in state outside the nearby radius. Combat events are sent once per recipient. Incoming messages are limited to 2 KiB and 60 messages per second per connection; slow consumers are disconnected, and heartbeat failures are cleaned up. Four rooms maximum per server process by default.
 
-This first version uses anonymous player names and room/squad codes. It has no accounts, matchmaking service, voice chat, durable match database, server clustering, revive system or production anti-cheat service. Losing a connection eliminates that slot; reconnect/resume is not implemented. Player names identify sessions, not verified human identities. Menus cannot pause the server match.
+This first version uses anonymous player names and room/squad codes. It has no accounts, matchmaking service, voice chat, durable match database, server clustering, revive system or production anti-cheat service. A dropped player keeps their slot and health for 45 seconds (`RECONNECT_GRACE_MS`); the client reconnects automatically with a per-player resume token, and the slot is eliminated only if it does not return in time. Player names identify sessions, not verified human identities. Menus cannot pause the server match.
 
 All online modes now support seven server-authoritative vehicle types. Region transit remains exclusive to India Expedition. Everyone receives four server-managed guns and two medkits. Reload with R; switch guns with 1–4; use M for medkit; use E within a hub pad to resupply (20-second cooldown).
 
