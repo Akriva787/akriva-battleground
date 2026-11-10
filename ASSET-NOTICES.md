@@ -28,3 +28,14 @@ Source: Survey of India, Government of India. Generalized International Boundary
 Survey of India’s vector-download notice permits individual/internal/educational/research/website use and excludes commercial usage: https://www.surveyofindia.gov.in/documents/ibd-vectorformat.pdf . This map build is a noncommercial prototype; no open-source license is granted over the SoI data by this export.
 
 Triangulation used Mapbox Earcut as an authoring tool; Earcut is not loaded by the game runtime.
+
+## Photographic world surface atlas
+
+Concrete Wall 006, Asphalt 02 and Red Brick albedo and OpenGL normal maps by Poly Haven, CC0. Repacked into two 1024px atlases for this game. These are used for rough plaster, road aggregate and brick; car paint/glass remain original procedural materials.
+
+- https://polyhaven.com/a/concrete_wall_006
+- https://polyhaven.com/a/asphalt_02
+- https://polyhaven.com/a/red_brick
+- License: https://polyhaven.com/license
+
+No BGMI graphics, maps or characters are included.
