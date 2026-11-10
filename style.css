@@ -78,3 +78,102 @@ body:not(.playing) #kill-feed{display:none}
 .squad104-mode-picker{display:block;font-size:10px;letter-spacing:2px;margin:18px 0}.squad104-mode-picker select{display:block;width:100%;margin-top:8px;padding:12px;min-height:46px;background:#24342d;color:#f0dfb3;border:1px solid #d0b779;border-radius:4px;font-size:14px}.squad104-practice{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;background:#a9b89a11;border:1px solid #91aa8755;font-size:11px;color:#b4c7b8}.squad104-seats.size-1{grid-template-columns:1fr}.squad104-seats.size-2{grid-template-columns:1fr 1fr}@media(max-width:600px){.squad104-practice{align-items:stretch;flex-direction:column}}
 
 .garage-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}.garage-card{padding:20px;text-align:left;border:1px solid #9caa8b66;background:linear-gradient(135deg,#273b35,#16242b);color:#e7dfc7;display:flex;flex-direction:column;gap:10px;min-height:135px}.garage-card b{font-size:21px}.garage-card small{color:#b7c3af;font-size:11px}.garage-card span{color:#e7c887;font-size:12px}@media(max-width:600px){.garage-grid{grid-template-columns:1fr}}
+
+/* Mobile field HUD: thumb controls stay at the edges, the operator stays visible. */
+.touch-ui {height:100dvh;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.touch-ui button,.touch-ui select {touch-action:manipulation}
+.touch-ui header {padding:14px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left));z-index:14}
+.touch-ui header .brand {font-size:18px;letter-spacing:1.6px}
+.touch-ui header>div:last-child>button:not(#mobile-menu):not(#full),.touch-ui header .music-volume {display:none}
+.touch-ui #mobile-menu {display:block;min-height:42px}
+.touch-ui #full {min-width:42px;min-height:42px}
+.touch-ui:not(.playing) .settings {left:16px;right:16px;top:auto;bottom:max(12px,env(safe-area-inset-bottom));max-width:none;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 12px;background:#101d23ed}
+.touch-ui:not(.playing) .settings>:not(.control-layout):not(.graphics-picker) {display:none}
+.touch-ui .settings select {min-height:36px;max-width:145px;font-size:11px}
+.touch-ui:not(.playing) .operator-card {display:none}
+.touch-ui:not(.playing) #start-screen {left:20px;right:20px;top:116px;bottom:92px;max-width:560px;overflow-y:auto;padding:0 4px 20px;scrollbar-width:thin}
+.touch-ui #start-screen h1 {font-size:clamp(34px,7vw,48px);letter-spacing:-1.7px;margin:16px 0}
+.touch-ui #start-screen p {font-size:12px;line-height:1.6}
+.touch-ui #start-screen .primary {width:100%;min-height:52px;font-size:13px;margin-top:12px}
+.touch-ui #start-screen .mode-picker select {min-height:44px;width:100%}
+.touch-ui #start-screen .features {display:none}
+.touch-ui #start-screen>small {display:block;margin-top:20px;font-size:8px;line-height:1.6}
+.touch-ui #start-screen .hub-launch,.touch-ui #garage-open {width:100%;min-height:44px}
+.touch-ui:not(.playing) #rotate-hint {top:78px;left:20px;right:20px;font-size:10px;border:0;background:#18282caa;padding:7px}
+.touch-ui:not(.playing) .top-hud,.touch-ui:not(.playing) #map,.touch-ui:not(.playing) #compass {display:none}
+.touch-ui .footer {display:none}
+.touch-ui.playing #controls {inset:0;gap:0;pointer-events:none;z-index:8}
+.touch-ui.playing #joystick {width:110px;height:110px;left:max(22px,env(safe-area-inset-left));bottom:max(76px,calc(env(safe-area-inset-bottom) + 56px));border:2px solid #f0f4f044;background:radial-gradient(circle,#b4c7bd12 49%,#18292e65 50%);box-shadow:0 3px 20px #0002;touch-action:none}
+.touch-ui #joystick:before {content:'MOVE';position:absolute;top:-24px;left:0;right:0;text-align:center;font-size:8px;letter-spacing:2px;color:#f4f4e8b0;pointer-events:none}
+.touch-ui #stick-thumb {width:44px;height:44px;left:calc(50% - 22px);top:calc(50% - 22px);background:#e0e8df55;border:1px solid #fff9;box-shadow:0 2px 8px #0004}
+.touch-ui.playing .actions {right:max(16px,env(safe-area-inset-right));bottom:max(62px,calc(env(safe-area-inset-bottom) + 44px));width:180px;grid-template-columns:50px 50px 68px;grid-template-rows:48px 48px 68px;gap:6px;align-items:stretch;pointer-events:none}
+.touch-ui.playing .actions button {pointer-events:auto;min-height:44px;font-size:9px;padding:4px;border-radius:14px;border-color:#eef3e459;background:#18282d91;box-shadow:0 2px 7px #0002;line-height:1.3;touch-action:none}
+.touch-ui.playing .actions button small {display:none}
+.touch-ui.playing #fire {width:68px;height:68px;min-height:68px;font-size:14px;letter-spacing:1px;font-weight:850;background:#e1c18abf;color:#172329;border:2px solid #f7e5bb;box-shadow:0 0 0 4px #ecd8a41a}
+.touch-ui.playing #aim {border-radius:50%;width:48px;height:48px;justify-self:center}
+.touch-ui.playing #jump {border-radius:50%;width:48px;height:48px;justify-self:center;background:#d3d9c43d;border-color:#e9e5ca99}
+.touch-ui.playing #prone {align-self:end;height:46px}
+.touch-ui.playing #support-toggle {font-size:8px;letter-spacing:.5px}
+.touch-ui.playing .actions button[aria-pressed=true] {background:#deca91d9;color:#16252a;border-color:#fff0bd}
+.touch-ui.playing .actions button:disabled {opacity:.35}
+.touch-ui.playing.support-open #support-controls {pointer-events:auto;right:0;bottom:calc(100% + 12px);width:224px;padding:10px;gap:8px;border:1px solid #d8dfc95c;background:#101f25f2;border-radius:14px;box-shadow:0 10px 40px #0006}
+.touch-ui.playing #support-controls button {min-height:46px;touch-action:manipulation}
+.touch-ui.playing .bottom-hud {left:max(18px,env(safe-area-inset-left));right:max(18px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:6;align-items:end}
+.touch-ui.playing .health {width:112px;background:transparent;padding:0}
+.touch-ui.playing .health>div {margin-bottom:4px}
+.touch-ui.playing .health span {font-size:7px}
+.touch-ui.playing .health strong {font-size:15px}
+.touch-ui.playing .health progress {height:5px}
+.touch-ui.playing .weapon>strong {font-size:25px;line-height:1;margin:4px 0}
+.touch-ui.playing .weapon span {font-size:13px}
+.touch-ui.playing .weapon>small {font-size:7px;letter-spacing:.6px;max-width:160px}
+.touch-ui.playing header .brand {font-size:12px;letter-spacing:1px;max-width:150px}
+.touch-ui.playing header .brand small {display:none}
+.touch-ui.playing header {padding:12px 14px}
+.touch-ui.playing #map {top:max(12px,env(safe-area-inset-top));right:100px;width:64px;height:64px;border-radius:10px}
+.touch-ui.playing .top-hud {top:42px;left:14px;right:auto;max-width:calc(100vw - 192px);padding:5px 8px;gap:7px;border-radius:6px;flex-wrap:wrap;font-size:7px;background:#12252bb3;z-index:6}
+.touch-ui.playing .top-hud b {font-size:12px;margin-left:3px}
+.touch-ui.playing #zone-text {max-width:150px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:7px}
+.touch-ui.playing #pause {min-height:28px;padding:4px 7px;font-size:8px}
+.touch-ui.playing #compass {top:13px;font-size:7px;max-width:35%;overflow:hidden;white-space:nowrap}
+.touch-ui.playing #rotate-hint {display:none}
+.touch-ui.playing #mission-panel {top:90px;left:14px;width:180px;max-width:40vw;background:#16262bb3;padding:8px}
+.touch-ui.playing #mission-panel p {display:none}
+.touch-ui.playing #mission-panel>strong {font-size:9px;max-width:130px}
+.touch-ui.playing #message {bottom:40%;max-width:52%;font-size:9px;line-height:1.5;padding:7px 10px;pointer-events:none}
+.touch-ui.playing #kill-feed {top:96px;right:16px;font-size:9px;max-width:40vw}
+.touch-ui.playing #team-bar {top:42px;font-size:10px;padding:4px 9px}
+.touch-ui.playing.touch-settings-open header>div:last-child {max-width:min(320px,calc(100vw - 28px));background:#101f25f5;flex-wrap:wrap;top:12px;right:14px}
+.touch-ui.playing.touch-settings-open .settings {top:156px;max-height:calc(100dvh - 174px);max-width:300px;right:14px;left:auto;padding:14px;border-radius:10px;gap:10px;z-index:15}
+.touch-ui .operations-hub,.touch-ui dialog {max-height:calc(100dvh - 24px);max-width:calc(100vw - 24px);overflow-y:auto}
+.touch-ui .contract-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.touch-ui .operations-hub .contract-art {height:74px}
+.touch-ui .contract-card h3 {font-size:18px}
+.touch-ui .contract-card p {font-size:10px;line-height:1.5}
+@media(orientation:portrait){
+ .touch-ui.playing .actions {width:166px;grid-template-columns:44px 44px 66px;grid-template-rows:46px 46px 66px;right:max(12px,env(safe-area-inset-right));gap:6px}
+ .touch-ui.playing #fire {width:66px;height:66px;min-height:66px}
+ .touch-ui.playing #joystick {width:100px;height:100px;left:max(18px,env(safe-area-inset-left))}
+ .touch-ui.playing #compass {display:none}
+ .touch-ui.playing #map {top:88px;right:14px;width:66px;height:66px}
+ .touch-ui.playing .top-hud {max-width:calc(100vw - 28px);top:60px}
+ .touch-ui.playing #mission-panel {top:100px;max-width:calc(100vw - 106px)}
+ .touch-ui.playing #kill-feed {top:166px}
+ .touch-ui.playing #message {bottom:43%;max-width:80%}
+ .touch-ui .contract-grid {grid-template-columns:1fr}
+}
+@media(orientation:landscape) and (max-height:480px){
+ .touch-ui:not(.playing) #start-screen {top:72px;bottom:78px;max-width:520px}
+ .touch-ui:not(.playing) #rotate-hint {display:none}
+ .touch-ui:not(.playing) #start-screen h1 {font-size:32px;margin:9px 0}
+ .touch-ui:not(.playing) #start-screen p {font-size:11px;margin:8px 0}
+ .touch-ui.playing #joystick {bottom:56px;width:100px;height:100px}
+ .touch-ui.playing .actions {bottom:48px;grid-template-rows:44px 44px 60px;grid-template-columns:46px 46px 60px;width:164px}
+ .touch-ui.playing #fire {width:60px;height:60px;min-height:60px;font-size:12px}
+ .touch-ui.playing #jump,.touch-ui.playing #aim {width:44px;height:44px}
+ .touch-ui.playing #mission-panel {top:88px;max-width:180px}
+ .touch-ui.playing #mission-panel .mission-alert,.touch-ui.playing #radio-status {display:none}
+ .touch-ui.playing.support-open #support-controls {bottom:0;right:calc(100% + 8px);width:210px}
+}
+
+.touch-ui:not(.playing) #mobile-menu{display:none}

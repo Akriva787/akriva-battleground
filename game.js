@@ -99,7 +99,11 @@ function updateMusic(dt){const player=$('bgm');if(!musicEnabled||!musicArmed)ret
 
 let touchInput=!!window.matchMedia?.('(pointer: coarse)').matches,moveStick={x:0,y:0,id:null},firePointerId=null,fireLast=null,touchMenuResume=false;
 function enableTouch(){touchInput=true;document.body.classList.add('touch-ui');}
-if(touchInput)enableTouch();
+let controlLayout='auto';try{controlLayout=localStorage.getItem('akriva-control-layout')||'auto';}catch{}
+if(!['auto','touch','desktop'].includes(controlLayout))controlLayout='auto';
+function syncControlLayout(){touchInput=controlLayout==='touch'||(controlLayout==='auto'&&!!window.matchMedia?.('(pointer: coarse)').matches);document.body.classList.toggle('touch-ui',touchInput);$('control-layout').value=controlLayout;}
+syncControlLayout();
+$('control-layout').onchange=()=>{controlLayout=$('control-layout').value;keys.clear();clearPointerState();syncControlLayout();try{localStorage.setItem('akriva-control-layout',controlLayout);}catch{}document.body.classList.remove('support-open','touch-settings-open');};
 try{const saved=localStorage.getItem('akriva-graphics');quality=['low','balanced','high'].includes(saved)?saved:touchInput?'low':'balanced'}catch{quality=touchInput?'low':'balanced'}$('graphics').value=quality;
 if(!/[?&]debug\b/.test(location.search))$('profile-readout').style.display='none';else window.akrivaDebug={teleport(x,z,heading=yaw,tilt=0,height){if(game){game.p.x=x;game.p.z=z;if(height!==undefined){game.p.y=height;game.p.vy=0;}}yaw=heading;pitch=tilt;},simulate(seconds,held=[],keepHp=false){if(!game)return null;held.forEach(k=>keys.add(k));for(let i=0;i<seconds*60;i++){game.phase='playing';if(!keepHp)game.p.hp=100;advance(1/60);}held.forEach(k=>keys.delete(k));return this.state();},get game(){return game;},get net(){return net;},collect,cycleWeapon,fire,capture(type='image/jpeg'){renderer?.render();return canvas.toDataURL(type,.85);},state(){return game&&{x:+game.p.x.toFixed(2),y:+(game.p.y||0).toFixed(2),z:+game.p.z.toFixed(2),place:buildingLabel()};}};
 function resetStick(){moveStick.x=0;moveStick.y=0;moveStick.id=null;$('stick-thumb').style.transform='translate(0px,0px)';}
