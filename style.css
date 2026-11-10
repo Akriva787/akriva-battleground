@@ -264,3 +264,6 @@ body:not(.playing) #kill-feed{display:none}
 .touch-ui.playing #mobile-aim-zone{z-index:1}
 .touch-ui.playing .actions,.touch-ui.playing #mobile-quick,.touch-ui.playing #mobile-sprint,.touch-ui.playing #joystick,.touch-ui.playing #mobile-drive-pad{z-index:6}
 @media(orientation:landscape) and (max-height:360px){.touch-ui.playing.support-open #support-controls{bottom:108px;right:244px}}
+.touch-ui.playing.driving-mobile .weapon #ammo,.touch-ui.playing.driving-mobile #support-status{display:none}
+.touch-ui.playing.driving-mobile #weapon-state{font-size:20px;letter-spacing:0;color:#f3e7c7;margin-top:6px}
+.touch-ui.playing.driving-mobile #jump:before{content:'▣';font-size:23px}
