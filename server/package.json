@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node server.mjs",
-    "test": "node modes-test.mjs && node invites-test.mjs && node vehicles-test.mjs && node test.mjs"
+    "test": "node modes-test.mjs && node invites-test.mjs && node vehicles-test.mjs && node reconnect-test.mjs && node test.mjs"
   },
   "dependencies": {
     "ws": "8.22.2"
