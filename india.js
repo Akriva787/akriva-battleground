@@ -46,9 +46,10 @@ const power=pois[6];house(power,-25,0,22,35,7,'#777f7b',false);for(const x of[9,
 const port=pois[7];for(let row=-2;row<=2;row++)for(const col of[-1,1]){prop(port,col*21,row*16,12,3.2,6,['#646e67','#8e6651','#5f7581'][(row+4)%3],'container');if(row%2===0)prop(port,col*21,row*16,12,3.2,6,'#7c8170','container',true,4.8);}prop(port,0,55,125,.08,24,'#515b58','box',false,.10);
 const quarry=pois[8];for(let i=0;i<12;i++){const a=i*2.399;prop(quarry,Math.sin(a)*(20+i*2),Math.cos(a)*(20+i*2),4+i%4,2+i%3,4+i%3,'#818073','rock');}house(quarry,27,0,12,16,4,'#8c8270',false);
 const ridge=pois[9];prop(ridge,-14,-8,1.4,17,1.4,'#68726a','mast',true,ground(ridge.x-14,ridge.z-8)+8.5);
-for(const [a,b]of[[0,1],[0,3],[0,4],[0,2],[1,5],[1,8],[2,7],[7,6],[3,6],[4,9]])road(pois[a],pois[b]);
+for(const [a,b]of[[0,1],[0,3],[0,4],[1,5],[1,8],[2,7],[3,6],[4,9]])road(pois[a],pois[b]);
 // A narrow fictional canal separates the airfield; two flat, drivable bridge crossings.
 const canal={x:origin.x,z:origin.z+157.5,w:760,d:25,bridges:[origin.x-160,origin.x+160]};
+for(const [a,b]of[[pois[0],{x:canal.bridges[0],z:origin.z+80}],[{x:canal.bridges[0],z:origin.z+240},pois[2]],[pois[3],{x:canal.bridges[1],z:origin.z+80}],[pois[6],{x:canal.bridges[1],z:origin.z+80}],[{x:canal.bridges[1],z:origin.z+240},pois[7]]])road(a,b);
 for(const bx of canal.bridges){road({x:bx,z:origin.z+80},{x:bx,z:origin.z+240},12);for(const side of[-1,1])addProp({poi:2,x:bx+side*7.6,z:canal.z,y:.6,w:.4,h:1.2,d:31,color:'#8c9285',kind:'box',solid:true});}
 let edge=origin.x-380;for(const bx of canal.bridges){tacticalBlocks.push({x:(edge+bx-7)/2,z:canal.z,w:bx-7-edge,d:25,y:-1,h:1.8,water:true});edge=bx+7;}tacticalBlocks.push({x:(edge+origin.x+380)/2,z:canal.z,w:origin.x+380-edge,d:25,y:-1,h:1.8,water:true});
 // Deterministic cover, trees and supplies. Never put a blocking tree on a transit spawn or road.
@@ -60,7 +61,7 @@ function sectorAtlas(ctx,w,h,player){const scale=Math.min(w,h)/910,point=(x,z)=>
  for(const hill of hills){for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(...point(hill.x,hill.z),hill.r*scale*(1-i*.2),0,Math.PI*2);ctx.fillStyle=['#728064','#7f8a69','#8a9275','#9a9e81'][i];ctx.fill();}}
  ctx.fillStyle='#345c6e';const q=point(canal.x-canal.w/2,canal.z-canal.d/2);ctx.fillRect(q[0],q[1],canal.w*scale,canal.d*scale);
  for(const r of roads){ctx.strokeStyle='#c4b795';ctx.lineWidth=Math.max(1,r.w*scale);ctx.beginPath();ctx.moveTo(...point(r.x-Math.sin(r.rotation)*r.d/2,r.z-Math.cos(r.rotation)*r.d/2));ctx.lineTo(...point(r.x+Math.sin(r.rotation)*r.d/2,r.z+Math.cos(r.rotation)*r.d/2));ctx.stroke();}
- ctx.fillStyle='#c3b79c';for(const b of buildings){const q=point(b.x-b.w/2,b.z-b.d/2);ctx.fillRect(q[0],q[1],b.w*scale,b.d*scale);}for(const p of pois){const q=point(p.x,p.z);ctx.fillStyle='#f2dfaf';ctx.font=(w>300?'bold 12px':'7px')+' system-ui';ctx.textAlign='center';ctx.fillText(p.name.toUpperCase(),q[0],q[1]-8);}
+ ctx.fillStyle='#9da88c';for(const a of props.filter(a=>['container','tank','runway','court','rock'].includes(a.kind))){const q=point(a.x-a.w/2,a.z-a.d/2);ctx.fillRect(q[0],q[1],Math.max(1,a.w*scale),Math.max(1,a.d*scale));}ctx.fillStyle='#c3b79c';for(const b of buildings){const q=point(b.x-b.w/2,b.z-b.d/2);ctx.fillRect(q[0],q[1],b.w*scale,b.d*scale);}for(const p of pois){const q=point(p.x,p.z);ctx.fillStyle='#f2dfaf';ctx.font=(w>300?'bold 12px':'7px')+' system-ui';ctx.textAlign='center';ctx.fillText(p.name.toUpperCase(),q[0],q[1]-8);}
  if(player){const q=point(player.x,player.z);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(...q,w>300?5:3,0,Math.PI*2);ctx.fill();}ctx.textAlign='left';ctx.fillStyle='#f1e7cf';ctx.font=(w>300?'11px':'7px')+' system-ui';ctx.fillText('N ↑  /  FICTIONAL SECTOR',8,h-9);
 }
 for(const l of sectorLoot)l.y=ground(l.x,l.z);
