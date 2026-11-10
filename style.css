@@ -182,3 +182,4 @@ body:not(.playing) #kill-feed{display:none}
 .touch-ui.playing #map{right:168px}
 @media(orientation:portrait){.touch-ui.playing #map{right:14px}}
 @media(orientation:landscape) and (max-height:480px){.touch-ui.playing .actions{bottom:max(86px,calc(env(safe-area-inset-bottom) + 74px))}}
+.touch-ui.playing.touch-settings-open header>div:last-child>button:not(#mobile-menu):not(#full){display:flex;align-items:center;min-height:38px}
