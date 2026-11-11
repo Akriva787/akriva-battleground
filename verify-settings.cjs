@@ -41,9 +41,9 @@ const posBefore=JSON.stringify(g.state().p),creditsBefore=g.state().credits,weap
 for(const id of ["perf-label","profile-readout"]) require("assert").ok(require("fs").readFileSync(require("path").join(__dirname,"index.html"),"utf8").includes(`id="${id}"`),`Missing runtime node ${id}`);
 
 // Every catalogue weapon can render, equip, fire and reload offline.
-const arsenal=ctx.window.AkrivaWeapons;assert.equal(Object.keys(arsenal).length,50);
+const arsenal=ctx.window.AkrivaWeapons;assert.equal(Object.keys(arsenal).length,56);
 for(const [id,w] of Object.entries(arsenal)){
  const state=g.state();state.phase='playing';state.credits=10000;state.bots=[];state.mode='india';state.visited=[];state.cooldown=0;state.reload=0;g.switchWeapon(id);state.cooldown=0;const before=state.mag;g.fire();assert.equal(state.mag,before-1,id+' consumes one cartridge');state.reload=0;state.mag=0;state.reserve=w.mag;g.reload();assert(state.reload>0,id+' starts reload');for(let t=0;t<w.reload+.1;t+=.05)g.advance(.05);assert.equal(state.mag,w.mag,id+' restores magazine');
  get('settings-guns').onclick();get('preview-weapon').value=id;get('preview-weapon').onchange();g.renderer.render();get('operator-done').onclick();
 }
-console.log('PASS: all 50 guns equip, fire, reload and produce finite preview geometry.');
+console.log('PASS: all 56 guns equip, fire, reload and produce finite preview geometry.');
