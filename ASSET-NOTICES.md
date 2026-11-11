@@ -1,6 +1,13 @@
 # AKRIVA asset notices
 
-## Operator roster
+## Tactical operators
+
+Mixamo Soldier from the three.js examples, with original Akriva texture recolours. Uses the existing baked idle/walk/run clips and normal maps. Seven tactical outfits share this model; they are cosmetic variations, not seven separate body meshes.
+
+- Source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
+- Mixamo terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+
+## Additional stylized operator roster
 
 Characters from Quaternius's "Ultimate Animated Character Pack" (CC0), with their own idle/walk/run animations baked into frames, arms posed to hold a rifle and skin tones chosen for Akriva. The military soldier models from the pack are not used.
 
