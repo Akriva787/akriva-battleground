@@ -64,3 +64,10 @@ Concrete Wall 006, Asphalt 02 and Red Brick albedo and OpenGL normal maps by Pol
 - License: https://polyhaven.com/license
 
 World materials and game maps are separate from the character asset credited above.
+
+## Additional detailed characters (11 November 2026)
+
+- **Victor Tactical** uses “PUBG Victor 3D Model HD FREE” by **Mr Mudassar**: https://sketchfab.com/3d-models/pubg-victor-3d-model-hd-free-27383039d2224388a80478a2f14d6a83 . Listing and download modal state **CC BY 4.0**, https://creativecommons.org/licenses/by/4.0/ . Adaptations: texture atlas, anatomical smooth rig, rifle-hand IK, baked idle/walk/run, runtime packing. The free GLB was downloaded directly; no paid files or off-site links were used.
+- **Forest Elf** uses “Forest Elf Set (Pubg/Bgmi) Walk Animation” by **YT-XTREMENINJA (@dograanurag786)**: https://sketchfab.com/3d-models/forest-elf-set-pubgbgmi-walk-animation-03d8c71082ce4d36af4b863429c9499e . Listing states **CC BY 4.0**, https://creativecommons.org/licenses/by/4.0/ . Adaptations: mesh simplification, atlases, retargeting and packed idle/walk/run frames. Locomotion shares the project's previously credited animation sources.
+
+These are community-uploaded models; the game is not affiliated with PUBG, BGMI or their publishers. Listing licenses describe the uploader's grant and do not independently establish ownership of third-party designs.
