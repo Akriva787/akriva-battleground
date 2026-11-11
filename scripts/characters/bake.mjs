@@ -6,11 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {readGltf} from './gltf.mjs';
 
-// Linear-space skin tones, light to deep.
-const SKIN_TONES=[[.78,.5,.33],[.62,.36,.22],[.5,.27,.15],[.85,.6,.43],[.38,.2,.11],[.7,.44,.28]];
 const CLIPS=[['idle','Idle',4],['walk','Walk',8],['run','Run',8]],HEIGHT=1.8;
-// Arms hold a rifle: right arm from the one-handed shooting pose, left arm mirrored and brought in under the barrel.
-const ARM_POSE_CLIP='Shoot_OneHanded',ARM_POSE_TIME=.25,RIGHT_ARM=['Shoulder.R','UpperArm.R','LowerArm.R','Fist.R'],LEFT_ARM=['Shoulder.L','UpperArm.L','LowerArm.L','Fist.L'];
 
 const m4=()=>{const a=new Float64Array(16);a[0]=a[5]=a[10]=a[15]=1;return a;};
 function mul(a,b){const r=new Float64Array(16);for(let c=0;c<4;c++)for(let row=0;row<4;row++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+row]*b[c*4+k];r[c*4+row]=s;}return r;}
@@ -30,30 +26,25 @@ function bake(file){
    local[c.target.node][c.target.path==='translation'?'t':c.target.path==='rotation'?'r':'s']=n===4?slerp(a,b,f):a.map((v,i)=>v+(b[i]-v)*f);}
   if(override)for(const[node,r]of override)local[node].r=r;
   const world=new Array(nodes.length);const solve=i=>world[i]??=(parent[i]<0?trs(local[i].t,local[i].r,local[i].s):mul(solve(parent[i]),trs(local[i].t,local[i].r,local[i].s)));nodes.forEach((_,i)=>solve(i));return world;}
- // Rifle-hold arm rotations, taken once from the shooting clip.
- let armOverride=null;if(anim[ARM_POSE_CLIP]){const local=[];const a=anim[ARM_POSE_CLIP];for(const c of a.channels){if(c.target.path!=='rotation')continue;const nm=nodes[c.target.node].name;if(!RIGHT_ARM.includes(nm))continue;const s=a.samplers[c.sampler],times=accessor(s.input),vals=accessor(s.output);let k=0;while(k<times.length-2&&times[k+1]<ARM_POSE_TIME)k++;local.push([c.target.node,Array.from(vals.slice(k*4,k*4+4))]);}
-  armOverride=[...local];for(const[node,r]of local){const mirror=byName[nodes[node].name.replace('.R','.L')];if(mirror!==undefined)armOverride.push([mirror,[r[0],-r[1],-r[2],r[3]]]);}}
  // Weld vertices by material + bind position so the mesh is smooth-indexed; the shader draws flat faces from derivatives.
  const verts=[],index=[],key=new Map(),materials=g.materials.map(m=>(m.pbrMetallicRoughness?.baseColorFactor||[.8,.8,.8,1]).slice(0,3));
  for(const p of g.meshes[0].primitives){const P=accessor(p.attributes.POSITION),J=accessor(p.attributes.JOINTS_0),W=accessor(p.attributes.WEIGHTS_0),I=p.indices!==undefined?accessor(p.indices):P.map((_,i)=>i).filter(i=>i<P.length/3),local=[];
   for(let i=0;i<P.length/3;i++){const k=p.material+':'+P[i*3].toFixed(4)+','+P[i*3+1].toFixed(4)+','+P[i*3+2].toFixed(4);let v=key.get(k);if(v===undefined){v=verts.length;key.set(k,v);verts.push({p:[P[i*3],P[i*3+1],P[i*3+2]],j:Array.from(J.slice(i*4,i*4+4)),w:Array.from(W.slice(i*4,i*4+4)),m:p.material});}local.push(v);}
   for(let i=0;i<I.length;i+=3){const a=local[I[i]],b=local[I[i+1]],c=local[I[i+2]];if(a!==b&&b!==c&&a!==c)index.push(a,b,c);}}
- // Skin: the glTF leaves it near-black; give each character a real skin tone, keeping the dark facial features inside the face area dark.
- const skinIndex=g.materials.findIndex(m=>m.name==='Skin'),faceIndex=g.materials.findIndex(m=>m.name==='Face');
- if(skinIndex>=0){const tone=SKIN_TONES[[...path.basename(file)].reduce((h,c)=>h*31+c.charCodeAt(0)>>>0,7)%SKIN_TONES.length];const features=materials.length;materials.push(materials[skinIndex]);materials[skinIndex]=tone;
-  if(faceIndex>=0){const fv=verts.filter(v=>v.m===faceIndex),lo=[0,1,2].map(k=>Math.min(...fv.map(v=>v.p[k]))),hi=[0,1,2].map(k=>Math.max(...fv.map(v=>v.p[k])));for(const v of verts)if(v.m===skinIndex&&v.p[0]>lo[0]-.02&&v.p[0]<hi[0]+.02&&v.p[1]>lo[1]-.04&&v.p[1]<hi[1]+.06&&v.p[2]>lo[2]-.03)v.m=features;}}
+ // Colours stay exactly as the pack ships them (dark skin, white face plate).
  const V=verts.length;if(V>65535)throw Error('too many vertices');
  const skinFrame=world=>{const jm=joints.map((j,k)=>mul(world[j],ibm.slice(k*16,k*16+16)));return verts.map(v=>{let o=[0,0,0];for(let k=0;k<4;k++){if(!v.w[k])continue;const q=apply(jm[v.j[k]],v.p);o=o.map((x,i)=>x+q[i]*v.w[k]);}return o;});};
  // Normalise: idle frame 0 stands HEIGHT tall with feet at y=0; rotate 180° so the character faces -z like the soldier.
- const idle0=pose('Idle',0,armOverride),bind=skinFrame(idle0);let minY=1e9,maxY=-1e9;for(const p of bind){minY=Math.min(minY,p[1]);maxY=Math.max(maxY,p[1]);}
+ const idle0=pose('Idle',0),bind=skinFrame(idle0);let minY=1e9,maxY=-1e9;for(const p of bind){minY=Math.min(minY,p[1]);maxY=Math.max(maxY,p[1]);}
  const scale=HEIGHT/(maxY-minY),fix=p=>[-p[0]*scale,(p[1]-minY)*scale,-p[2]*scale];
  const jointPos=(world,name)=>fix(apply(world[byName[name]],[0,0,0]));
- // Gear fit: bounding boxes of the vertices weighted mostly to the head and torso.
- const near=name=>{const j=joints.indexOf(byName[name]),pts=bind.filter((_,i)=>verts[i].j[verts[i].w.indexOf(Math.max(...verts[i].w))]===j).map(fix);const lo=[0,1,2].map(k=>Math.min(...pts.map(p=>p[k]))),hi=[0,1,2].map(k=>Math.max(...pts.map(p=>p[k])));return{lo,hi,c:lo.map((v,k)=>(v+hi[k])/2),h:hi.map((v,k)=>(v-lo[k])/2)};};
- const head=near('Head'),torso=near('Torso'),headOffset=head.c.map((v,k)=>v-jointPos(idle0,'Head')[k]),chestOffset=torso.c.map((v,k)=>v-jointPos(idle0,'Torso')[k]);
+ // Gear fit: bounding boxes of the bind-pose vertices owned by the given joints (optionally a height band only).
+ const owned=(names,band)=>{const js=names.map(n=>joints.indexOf(byName[n])),pts=bind.map(fix).filter((p,i)=>js.includes(verts[i].j[verts[i].w.indexOf(Math.max(...verts[i].w))])&&(!band||Math.abs(p[1]-band)<.08));const lo=[0,1,2].map(k=>Math.min(...pts.map(p=>p[k]))),hi=[0,1,2].map(k=>Math.max(...pts.map(p=>p[k])));return{lo,hi,c:lo.map((v,k)=>(v+hi[k])/2),h:hi.map((v,k)=>(v-lo[k])/2)};};
+ // Head radius (helmets are modelled in head radii) ignores ears and hair tails by taking the narrower side; the vest wraps the trunk (not the arms) at chest height.
+ const head=owned(['Head']),torso=owned(['Body','Hips','Abdomen','Torso','Neck','Shoulder.L','Shoulder.R'],jointPos(idle0,'Torso')[1]),headOffset=head.c.map((v,k)=>v-jointPos(idle0,'Head')[k]),chestOffset=torso.c.map((v,k)=>v-jointPos(idle0,'Torso')[k]);
  const frames=[],hands=[],anchors=[],clips={};let offset=0;
  for(const[id,name,count]of CLIPS){const times=accessor(anim[name].samplers[0].input),duration=times[times.length-1];clips[id]={offset,count,duration};offset+=count;
-  for(let f=0;f<count;f++){const world=pose(name,duration*f/count,armOverride),pos=skinFrame(world).map(fix);
+  for(let f=0;f<count;f++){const world=pose(name,duration*f/count),pos=skinFrame(world).map(fix);
    // Normals per vertex from the skinned faces (smooth; flat shading happens in the shader).
    const nrm=pos.map(()=>[0,0,0]);for(let i=0;i<index.length;i+=3){const[a,b,c]=[index[i],index[i+1],index[i+2]],u=pos[b].map((v,k)=>v-pos[a][k]),w=pos[c].map((v,k)=>v-pos[a][k]),n=[u[1]*w[2]-u[2]*w[1],u[2]*w[0]-u[0]*w[2],u[0]*w[1]-u[1]*w[0]];for(const x of[a,b,c])for(let k=0;k<3;k++)nrm[x][k]+=n[k];}
    frames.push({pos,nrm});hands.push([jointPos(world,'Fist.R'),jointPos(world,'Fist.L')].map(p=>p.map(v=>+v.toFixed(5))));
@@ -63,7 +54,7 @@ function bake(file){
  frames.forEach((fr,f)=>{const base=f*frameStride;fr.pos.forEach((p,i)=>p.forEach((v,k)=>buf.writeInt16LE(Math.max(-32767,Math.min(32767,Math.round(v*1e4))),base+i*6+k*2)));fr.nrm.forEach((n,i)=>{const l=Math.hypot(...n)||1;n.forEach((v,k)=>buf.writeInt8(Math.round(v/l*127),base+posBytes+i*3+k));});});
  // Palette texture: one texel column per material in a 64x1 strip.
  const PAL=64;verts.forEach((v,i)=>{buf.writeFloatLE((v.m+.5)/PAL,uvOffset+i*8);buf.writeFloatLE(.5,uvOffset+i*8+4);});index.forEach((v,i)=>buf.writeUInt16LE(v,indexOffset+i*2));
- const meta={vertices:V,indices:index.length,frames:frames.length,frameStride,normalOffset:posBytes,uvOffset,indexOffset,clips,hands,anchors,height:HEIGHT,flat:true,palette:materials.map(c=>'#'+c.map(srgb).map(x=>x.toString(16).padStart(2,'0')).join('')),paletteWidth:PAL,fit:{head:+Math.max(head.h[0],head.h[2]).toFixed(3),hw:+torso.h[0].toFixed(3),hd:+torso.h[2].toFixed(3)}};
+ const meta={vertices:V,indices:index.length,frames:frames.length,frameStride,normalOffset:posBytes,uvOffset,indexOffset,clips,hands,anchors,height:HEIGHT,flat:true,palette:materials.map(c=>'#'+c.map(srgb).map(x=>x.toString(16).padStart(2,'0')).join('')),paletteWidth:PAL,fit:{head:+Math.min(head.h[0],head.h[2]).toFixed(3),hw:+torso.h[0].toFixed(3),hd:+torso.h[2].toFixed(3)}};
  return{meta,buf};}
 
 const [out,...files]=process.argv.slice(2);fs.mkdirSync(out,{recursive:true});const indexFile=path.join(out,'index.json'),all=fs.existsSync(indexFile)?JSON.parse(fs.readFileSync(indexFile,'utf8')):{};

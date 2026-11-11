@@ -9,7 +9,7 @@ Mixamo Soldier from the three.js examples, with original Akriva texture recolour
 
 ## Additional stylized operator roster
 
-Characters from Quaternius's "Ultimate Animated Character Pack" (CC0), with their own idle/walk/run animations baked into frames, arms posed to hold a rifle and skin tones chosen for Akriva. The military soldier models from the pack are not used.
+Characters from Quaternius's "Ultimate Animated Character Pack" (CC0), with their own idle/walk/run animations baked into frames. Colours and poses are kept as the pack ships them. The military soldier models from the pack are not used.
 
 - Pack: https://quaternius.com/packs/ultimatedanimatedcharacter.html
 - License: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/

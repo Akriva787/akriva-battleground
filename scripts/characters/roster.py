@@ -12,9 +12,9 @@ roster=[]
 for id,meta in index.items():
     name,group=next((n,c) for p,n,c in NAMES if id.startswith(p))
     sex=' (F)' if 'female' in id or id=='witch' else ' (M)' if 'male' in id or id in('wizard','elf','vikinghelmet','chef-hat','cowboy-hair') else ''
-    # Swatch: clothing colours, skipping skin (first entry is the tone), the face plate and the dark features.
-    pal=[c for c in meta['palette'][:-1] if c.lower() not in('#fffff8',)]
-    sw=(pal[1:]+pal)[:3]
+    # Swatch: clothing colours, skipping the dark skin and the white face plate.
+    pal=[c for c in meta['palette'] if c.lower() not in('#fffff8','#1f1f1f')]
+    sw=(pal+pal)[:3]
     roster.append({'id':id,'name':name+sex,'role':group,'swatch':sw,'meta':meta})
 roster.sort(key=lambda r:(ORDER.index(r['role']),r['name']))
 open(out,'w').write('// Operator roster: Quaternius "Ultimate Animated Character Pack" (CC0), baked by scripts/characters/bake.mjs.\n// Each model\'s frames load on demand from characters/<id>.bin.\nconst AKRIVA_ROSTER='+json.dumps(roster,separators=(',',':'))+';\n')
