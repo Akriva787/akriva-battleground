@@ -2,10 +2,11 @@
 
 ## Tactical operators
 
-Mixamo Soldier from the three.js examples, with original Akriva texture recolours. Uses the existing baked idle/walk/run clips and normal maps. Seven tactical outfits share this model; they are cosmetic variations, not seven separate body meshes.
+“Military tactical suit (LowPolyGameReady)” by DanlyVostok (1799danly), CC BY 4.0. Renamed Ranger Tactical in Akriva; idle/walk/run animations retargeted and baked, textures packed into albedo/normal atlases, and seven optional camouflage colour treatments added. The seven outfits share this one human mesh. This replaces the Mixamo sci-fi Soldier. No PUBG character asset is distributed.
 
-- Source: https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
-- Mixamo terms: https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html
+- Source: https://sketchfab.com/3d-models/military-tactical-suit-lowpolygameready-ef698ce36b1545a78ce592dd3db4c7ed
+- Creator: https://sketchfab.com/1799danly
+- License: https://creativecommons.org/licenses/by/4.0/
 
 ## Additional stylized operator roster
 
