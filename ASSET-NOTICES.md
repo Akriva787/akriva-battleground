@@ -1,5 +1,14 @@
 # AKRIVA asset notices
 
+## Classic Battleground operator
+
+“Pubg Male Model” by David Campbell (david-campbell), downloaded from Sketchfab under CC BY 4.0 on 11 November 2026. The downloaded model is static and has no skeleton or animation. Akriva adds an anatomical smooth-weight rig, rifle-hold inverse-kinematics pose, retargeted idle/walk/run leg motion from the existing animation source, fitted gear anchors, and a packed texture atlas. The helmet, white shirt, tie, jeans and boots come from this model; this is a community asset listing, not a claim of official PUBG endorsement.
+
+- Model: https://sketchfab.com/3d-models/pubg-male-model-d45092e3358943c29c7d7f79ceffb0d0
+- Creator: https://sketchfab.com/david-campbell
+- License: https://creativecommons.org/licenses/by/4.0/
+- Changes: custom rigging, animation retargeting, texture packing, game integration.
+
 ## Tactical operators
 
 “Military tactical suit (LowPolyGameReady)” by DanlyVostok (1799danly), CC BY 4.0. Renamed Ranger Tactical in Akriva; idle/walk/run animations retargeted and baked, textures packed into albedo/normal atlases, and seven optional camouflage colour treatments added. The seven outfits share this one human mesh. This replaces the Mixamo sci-fi Soldier. No PUBG character asset is distributed.
